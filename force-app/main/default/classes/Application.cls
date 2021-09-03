@@ -19,6 +19,7 @@ public class Application {
 					Account.SObjectType, 
 					Contact.SObjectType,
                     Opportunity.SObjectType,
+                    Case.SObjectType,
                     agf__PPM_Project__c.SObjectType
                  });
 				  	
@@ -35,6 +36,7 @@ public class Application {
             new Map<SObjectType, Type> {
                     Account.SObjectType => AccountsSelector.class,
                     Contact.SObjectType => ContactsSelector.class,
+                    Case.SObjectType => CasesSelector.class, //Added the case selector class here
                     Opportunity.SObjectType => OpportunitiesSelector.class,
                     agf__PPM_Project__c.SObjectType => ProjectsSelector.class }); 
                     
@@ -44,6 +46,11 @@ public class Application {
 			Application.Selector,
 			// Map SObjectType to Domain Class Constructors 
 			new Map<SObjectType, Type> {
+                    Account.SObjectType => Accounts.Constructor.class,
+                    Contact.SObjectType => Contacts.Constructor.class,
+                    Case.SObjectType => Cases.Constructor.class, //Added the case selector class here
+                    Opportunity.SObjectType => Opportunities.Constructor.class,
+                    agf__PPM_Project__c.SObjectType => Projects.Constructor.class
 					/*Team__c.SObjectType => Teams.Constructor.class,
 					Race__c.SObjectType => Races.Constructor.class,
 					Car__c.SObjectType => Cars.Constructor.class,
