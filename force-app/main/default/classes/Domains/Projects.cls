@@ -19,6 +19,24 @@ public inherited sharing class Projects extends ApplicationDomain {
 
     }
 
+
+    //Methods
+    public void createProjectsFromOpps(fflib_ISObjectUnitOfWork uow, List<Opportunity> opps) {
+
+        //Consider here the design pattern that selects the correct project to update
+        for(Opportunity opp: opps) {
+            //Here update the creation of the project to use the factory pattern ProjectCreateFactory, and based on the values from the opp select the appropiate opportunity, consider using reflection for this as well, with a metadata to select the project definitions, to do this first consider the business processes of projects 
+            agf__PPM_Project__c project = new agf__PPM_Project__c();
+            project.Name = opp.Name;
+            //rest of the fields
+
+            //uow register new
+            system.debug('Creating project from this opporunity: ' + opp.name + '. --> Project: ' + project);
+            uow.registerNew(project);
+        }
+
+    }
+
     public class Constructor implements fflib_SObjectDomain.IConstructable {
         public fflib_SObjectDomain construct(List<SObject> sObjectList) {
             return new Projects(sObjectList);
