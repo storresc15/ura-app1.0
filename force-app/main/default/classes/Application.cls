@@ -9,6 +9,7 @@ Modification Log:
 Developer                   Date                   Description
 ----------------------------------------------------------------------------------
 Sebastian                 2021-07-28              Initial version
+Sebastian                 2021-09-08              Added the User Service method
 *********************************************************************************/
 public class Application {
      
@@ -27,7 +28,8 @@ public class Application {
     public static final fflib_Application.ServiceFactory Service = 
     new Application.ServiceFactory( 
          new Map<Type, Type> {
-                IProjectsService.class => ProjectsServiceImpl.class });
+                IProjectsService.class => ProjectsServiceImpl.class,
+                IUserService.class => UserServiceImpl.class });
                     
     // Configure and create the SelectorFactory for this Application
     public static final fflib_Application.SelectorFactory Selector = 
