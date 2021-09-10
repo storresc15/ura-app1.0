@@ -25,7 +25,11 @@ public inherited sharing class ContactsSelector extends ApplicationSelector
             Contact.Id,
             Contact.FirstName,
             Contact.LastName,
-            Contact.OwnerId    };
+            Contact.OwnerId,
+            Contact.Active__c,
+            Contact.Email,
+            Contact.Title,
+            Contact.AccountId    };
     }
     
     public Schema.SObjectType getSObjectType() {

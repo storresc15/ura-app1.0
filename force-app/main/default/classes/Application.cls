@@ -21,7 +21,8 @@ public class Application {
 					Contact.SObjectType,
                     Opportunity.SObjectType,
                     Case.SObjectType,
-                    agf__PPM_Project__c.SObjectType
+                    agf__PPM_Project__c.SObjectType,
+                    User.SObjectType    
                  });
 				  	
    // Configure and create the ServiceFactory for this Application

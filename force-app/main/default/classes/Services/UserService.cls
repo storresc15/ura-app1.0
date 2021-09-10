@@ -11,8 +11,8 @@ Sebastian                 2021-08-05              Initial version
 *********************************************************************************/
 public with sharing class UserService {
     
-    public static void createUserFromContact(Set<Id> oppIds) {
-        
+    public static void createUserFromContact(Set<Id> conIds) {
+        service().createUserFromContact(conIds);
     }
     
     private static IUserService service() {
