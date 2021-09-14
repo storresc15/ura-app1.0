@@ -1,4 +1,4 @@
-/*********************************************************************************
+/********************************************************************************
 Class Name      : AccountsSelector
 Description     : Main Selector for Account object, handles all queries for the specific sObject - Use of fflib selector layer
 Created By      : Sebastian Torres
@@ -8,7 +8,7 @@ Modification Log:
 Developer                   Date                   Description
 ----------------------------------------------------------------------------------
 Sebastian                 2021-08-05              Initial version
-*********************************************************************************/
+********************************************************************************/
 public inherited sharing class AccountsSelector extends ApplicationSelector {
   public AccountsSelector() {
     super();
