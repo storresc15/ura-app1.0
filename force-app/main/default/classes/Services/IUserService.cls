@@ -1,4 +1,4 @@
-/*********************************************************************************
+/*******************************************************************************
 Class Name      : IUserService
 Description     : Main UserService Interface
 Created By      : Sebastian Torres
@@ -8,9 +8,7 @@ Modification Log:
 Developer                   Date                   Description
 ----------------------------------------------------------------------------------
 Sebastian                 2021-09-10              Initial version
-*********************************************************************************/
+*******************************************************************************/
 public interface IUserService {
-    
-    void createUserFromContact(Set<Id> conIds);
-
+  void createUserFromContact(Set<Id> conIds);
 }
