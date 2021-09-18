@@ -12,18 +12,20 @@ Sebastian                 2021-09-17              Initial version
 public without sharing class DecoratorSupport extends TicketSupport {
   TicketSupport support;
   Integer totalCase = 1;
+  Specific_Support__mdt specificSupport;
 
   public DecoratorSupport(
     TicketSupport s,
     Integer totalCasePerMonth,
     String supportName
   ) {
-    support = s;
-    totalCase = totalCasePerMonth;
+    this.support = s;
+    this.totalCase = totalCasePerMonth;
     //To be updated with the right metadata tyoe to get the decorator details
+    this.specificSupport = Specific_Support__mdt.getInstance(supportName);
   }
 
   public override Double getCost() {
-    return 80.0 * totalCase + support.getCost();
+    return specificSupport.Ticket_Cost__c * totalCase + support.getCost();
   }
 }

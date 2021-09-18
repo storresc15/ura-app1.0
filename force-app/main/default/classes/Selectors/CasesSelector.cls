@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*********************************************************************************
 Class Name      : CasesSelector
 Description     : Main Selector for Case object, handles all queries for the specific sObject - Use of fflib selector layer
 Created By      : Sebastian Torres
@@ -8,7 +8,7 @@ Modification Log:
 Developer                   Date                   Description
 ----------------------------------------------------------------------------------
 Sebastian                 2021-08-05              Initial version
-*******************************************************************************/
+*********************************************************************************/
 public inherited sharing class CasesSelector extends ApplicationSelector {
   public CasesSelector() {
     super();
@@ -27,7 +27,9 @@ public inherited sharing class CasesSelector extends ApplicationSelector {
       Case.OwnerId,
       Case.Priority,
       Case.AccountId,
-      Case.ContactId
+      Case.ContactId,
+      Case.Support_Product__c,
+      Case.Support_Feature__c
     };
   }
   public Schema.SObjectType getSObjectType() {

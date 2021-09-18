@@ -11,15 +11,17 @@ Sebastian                 2021-09-17              Initial version
 *******************************************************************************/
 public without sharing class BaseSupport extends TicketSupport {
   Integer totalCase = 1;
+  BaseSupport__mdt baseSupport;
 
   public BaseSupport(Integer totalCasePerMonth, String support) {
     this.totalCase = totalCasePerMonth;
-    //to update with the metadata call in order to get the right support type
+
+    this.baseSupport = BaseSupport__mdt.getInstance(support);
   }
 
   //Total cost to resolve one case
   public override Double getCost() {
-    return 25.0 * totalCase;
+    return baseSupport.Ticket_Cost__c * totalCase;
   }
 
   public override String getDescription() {
