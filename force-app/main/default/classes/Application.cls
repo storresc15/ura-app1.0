@@ -28,7 +28,8 @@ public class Application {
   public static final fflib_Application.ServiceFactory Service = new Application.ServiceFactory(
     new Map<Type, Type>{
       IProjectsService.class => ProjectsServiceImpl.class,
-      IUserService.class => UserServiceImpl.class
+      IUserService.class => UserServiceImpl.class,
+      ISupportService.class => SupportServiceImpl.class
     }
   );
 
