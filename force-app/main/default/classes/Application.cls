@@ -5,9 +5,9 @@ Description     : Application framework, using the factory method
 Created By      : Sebastian Torres
 Created Date    : 2021-07-28
 Modification Log:
----------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------
 Developer                   Date                   Description
-----------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 Sebastian                 2021-07-28              Initial version
 Sebastian                 2021-09-08              Added the User Service method
 *******************************************************************************/
@@ -20,6 +20,7 @@ public class Application {
       Opportunity.SObjectType,
       Case.SObjectType,
       agf__PPM_Project__c.SObjectType,
+      Bill__c.SObjectType,
       User.SObjectType
     }
   );
@@ -54,7 +55,8 @@ public class Application {
       Contact.SObjectType => Contacts.Constructor.class,
       Case.SObjectType => Cases.Constructor.class, //Added the case selector class here
       Opportunity.SObjectType => Opportunities.Constructor.class,
-      agf__PPM_Project__c.SObjectType => Projects.Constructor.class
+      agf__PPM_Project__c.SObjectType => Projects.Constructor.class,
+      Bill__c.SObjectType => Billings.Constructor.class
       /*Team__c.SObjectType => Teams.Constructor.class,
 					Race__c.SObjectType => Races.Constructor.class,
 					Car__c.SObjectType => Cars.Constructor.class,
