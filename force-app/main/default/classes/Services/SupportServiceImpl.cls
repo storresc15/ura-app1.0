@@ -4,9 +4,9 @@ Description     : Main Support Service Implementation
 Created By      : Sebastian Torres
 Created Date    : 2021-09-17
 Modification Log:
----------------------------------------------------------------------------------- 
+------------------------------------------------------------------------------- 
 Developer                   Date                   Description
-----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 Sebastian                 2021-09-17              Initial version
 *******************************************************************************/
 public inherited sharing class SupportServiceImpl implements ISupportService {
@@ -15,6 +15,7 @@ public inherited sharing class SupportServiceImpl implements ISupportService {
     List<Case> cases = selector.selectById(caseIds);
     Set<Id> contactIds = new Set<Id>();
     Set<Id> acctIds = new Set<Id>();
+    Cases caseDomain = (Cases) Application.Domain.newInstance(cases);
     fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance();
     for (Case c : cases) {
       contactIds.add(c.ContactId);
@@ -39,8 +40,7 @@ public inherited sharing class SupportServiceImpl implements ISupportService {
         ) {
           for (Entitlement e : entls) {
             if (e.AccountId == c.AccountId) {
-              c.EntitlementId = e.Id;
-              uow.registerDirty(c);
+              caseDomain.assignEntitlement(c, e.id, uow);
               break;
             }
           }

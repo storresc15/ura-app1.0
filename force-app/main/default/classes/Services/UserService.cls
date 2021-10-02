@@ -10,8 +10,11 @@ Developer                   Date                   Description
 Sebastian                 2021-08-05              Initial version
 *******************************************************************************/
 public with sharing class UserService {
-  public static void createUserFromContact(Set<Id> conIds) {
-    service().createUserFromContact(conIds);
+  public static void activateUserFromContact(Set<Id> conIds) {
+    service().activateUserFromContact(conIds);
+  }
+  public static void deactivateUserFromContact(Set<Id> conIds) {
+    service().deactivateUserFromContact(conIds);
   }
 
   private static IUserService service() {

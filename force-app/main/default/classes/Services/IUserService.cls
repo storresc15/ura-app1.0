@@ -10,5 +10,7 @@ Developer                   Date                   Description
 Sebastian                 2021-09-10              Initial version
 *******************************************************************************/
 public interface IUserService {
-  void createUserFromContact(Set<Id> conIds);
+  void activateUserFromContact(Set<Id> conIds);
+
+  void deactivateUserFromContact(Set<Id> conIds);
 }

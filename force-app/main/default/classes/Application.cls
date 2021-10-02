@@ -42,7 +42,8 @@ public class Application {
       Contact.SObjectType => ContactsSelector.class,
       Case.SObjectType => CasesSelector.class, //Added the case selector class here
       Opportunity.SObjectType => OpportunitiesSelector.class,
-      agf__PPM_Project__c.SObjectType => ProjectsSelector.class
+      agf__PPM_Project__c.SObjectType => ProjectsSelector.class,
+      User.SObjectType => UsersSelector.class
     }
   );
 
@@ -56,7 +57,8 @@ public class Application {
       Case.SObjectType => Cases.Constructor.class, //Added the case selector class here
       Opportunity.SObjectType => Opportunities.Constructor.class,
       agf__PPM_Project__c.SObjectType => Projects.Constructor.class,
-      Bill__c.SObjectType => Billings.Constructor.class
+      Bill__c.SObjectType => Billings.Constructor.class,
+      User.SObjectType => Users.Contructor.class
       /*Team__c.SObjectType => Teams.Constructor.class,
 					Race__c.SObjectType => Races.Constructor.class,
 					Car__c.SObjectType => Cars.Constructor.class,
