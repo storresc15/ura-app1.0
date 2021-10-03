@@ -54,6 +54,41 @@ public inherited sharing class Users extends ApplicationDomain {
     uow.registerDirty(u);
   }
 
+  public void assignPermissionSetOnUser(
+    User u,
+    Id permissionSetId,
+    fflib_ISObjectUnitOfWork uow
+  ) {
+    Boolean hasPSA = false;
+    for (PermissionSetAssignment psa : u.PermissionSetAssignments) {
+      if (psa.PermissionSetId == permissionSetId) {
+        hasPSA = true;
+        break;
+      }
+    }
+    if (!hasPSA) {
+      PermissionSetAssignment psa1 = new PermissionSetAssignment(
+        PermissionSetId = permissionSetId,
+        AssigneeId = u.id
+      );
+      uow.registerNew(psa1);
+    }
+  }
+
+  public void removePermissionSetOnUser(
+    User u,
+    Id permissionSetId,
+    fflib_ISObjectUnitOfWork uow
+  ) {
+    if (u.PermissionSetAssignments.size() > 0) {
+      for (PermissionSetAssignment psa : u.PermissionSetAssignments) {
+        if (psa.PermissionSetId == permissionSetId) {
+          uow.registerDeleted(psa);
+        }
+      }
+    }
+  }
+
   public class Constructor implements fflib_SObjectDomain.IConstructable {
     public fflib_SObjectDomain construct(List<SObject> sObjectList) {
       return new Users(sObjectList);

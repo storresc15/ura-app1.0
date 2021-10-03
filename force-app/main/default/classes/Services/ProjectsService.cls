@@ -13,6 +13,13 @@ public with sharing class ProjectsService {
   public static void projectCheckout(Set<Id> oppIds) {
   }
 
+  public static void handleProjectsAccessToUsers(
+    Set<Id> conIds,
+    Boolean activeProject
+  ) {
+    service().handleProjectsAccessToUsers(conIds, activeProject);
+  }
+
   private static IProjectsService service() {
     return (IProjectsService) Application.Service.newInstance(
       IProjectsService.class

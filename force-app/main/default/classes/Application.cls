@@ -21,7 +21,8 @@ public class Application {
       Case.SObjectType,
       agf__PPM_Project__c.SObjectType,
       Bill__c.SObjectType,
-      User.SObjectType
+      User.SObjectType,
+      PermissionSetAssignment.SObjectType
     }
   );
 

@@ -10,7 +10,7 @@ Developer                   Date                   Description
 Sebastian                 2021-08-05              Initial version
 *********************************************************************************/
 public interface IProjectsService {
-    
-    void projectCheckout(Set<Id> oppIds);
+  void projectCheckout(Set<Id> oppIds);
 
+  void handleProjectsAccessToUsers(Set<Id> conIds, Boolean activeProject);
 }
