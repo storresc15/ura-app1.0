@@ -18,6 +18,10 @@ public with sharing class SupportService {
     service().setCaseAssignmentRule(caseIds);
   }
 
+  public void setEntitlementsAssigments(Set<Id> caseIds) {
+    service().setEntitlementsAssigments(caseIds);
+  }
+
   private static ISupportService service() {
     return (ISupportService) Application.Service.newInstance(
       ISupportService.class

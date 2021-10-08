@@ -8,15 +8,25 @@ Modification Log:
 Developer                   Date                   Description
 -------------------------------------------------------------------------------
 Sebastian                 2021-09-17              Initial version
+
+Sebastiant                2021-10-07              Refactor the Service by implementing a facade pattern to group the entitlement and assignment rule methods together
 *******************************************************************************/
 public without sharing class SupportServiceImpl implements ISupportService {
   public void setSupportEntitlement(Set<Id> caseIds) {
+    fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance();
+    setSupportEntitlement(caseIds, uow);
+    uow.commitWork();
+  }
+
+  public void setSupportEntitlement(
+    Set<Id> caseIds,
+    fflib_ISObjectUnitOfWork uow
+  ) {
     CasesSelector selector = new CasesSelector();
     List<Case> cases = selector.selectById(caseIds);
     Set<Id> contactIds = new Set<Id>();
     Set<Id> acctIds = new Set<Id>();
     Cases caseDomain = (Cases) Application.Domain.newInstance(cases);
-    fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance();
     for (Case c : cases) {
       contactIds.add(c.ContactId);
       acctIds.add(c.AccountId);
@@ -47,17 +57,28 @@ public without sharing class SupportServiceImpl implements ISupportService {
         }
       }
     }
-
-    uow.commitWork();
   }
 
   public void setCaseAssignmentRule(Set<Id> caseIds) {
-    CasesSelector selector = new CasesSelector();
-    List<Case> cases = selector.selectById(caseIds);
     MyDML dmlOptions = new MyDML();
     fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance(
       dmlOptions
     );
+
+    setCaseAssignmentRule(caseIds, uow, dmlOptions);
+
+    uow.commitWork();
+  }
+
+  //Overloading the previous method to accept also a uow parameter
+  public void setCaseAssignmentRule(
+    Set<Id> caseIds,
+    fflib_ISObjectUnitOfWork uow,
+    MyDML dmlOptions
+  ) {
+    CasesSelector selector = new CasesSelector();
+    List<Case> cases = selector.selectById(caseIds);
+
     for (Case c : cases) {
       system.debug(
         'Inside the SupportService -- processing this case: ' + c.id
@@ -75,6 +96,18 @@ public without sharing class SupportServiceImpl implements ISupportService {
       c.setOptions(dmlOptions.getDMLOptions());
       uow.registerDirty(c);
     }
-    uow.commitWork();
+  }
+
+  //This method is used as facade pattern to call both the Entitlement and Assignment methods within a single call
+  public void setEntitlementsAssigments(Set<Id> caseIds) {
+    //Get configuration for the uow and DML opperations
+    MyDML dmlOptions = new MyDML();
+    fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance(
+      dmlOptions
+    );
+
+    //Call the methods with a single uow and dml options
+    setSupportEntitlement(caseIds, uow);
+    setCaseAssignmentRule(caseIds, uow, dmlOptions);
   }
 }
