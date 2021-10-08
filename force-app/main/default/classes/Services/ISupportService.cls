@@ -11,4 +11,5 @@ Sebastian                 2021-09-17              Initial version
 *******************************************************************************/
 public interface ISupportService {
   void setSupportEntitlement(Set<Id> caseIds);
+  void setCaseAssignmentRule(Set<Id> caseIds);
 }

@@ -9,7 +9,7 @@ Developer                   Date                   Description
 -------------------------------------------------------------------------------
 Sebastian                 2021-09-17              Initial version
 *******************************************************************************/
-public inherited sharing class SupportServiceImpl implements ISupportService {
+public without sharing class SupportServiceImpl implements ISupportService {
   public void setSupportEntitlement(Set<Id> caseIds) {
     CasesSelector selector = new CasesSelector();
     List<Case> cases = selector.selectById(caseIds);
@@ -48,6 +48,33 @@ public inherited sharing class SupportServiceImpl implements ISupportService {
       }
     }
 
+    uow.commitWork();
+  }
+
+  public void setCaseAssignmentRule(Set<Id> caseIds) {
+    CasesSelector selector = new CasesSelector();
+    List<Case> cases = selector.selectById(caseIds);
+    MyDML dmlOptions = new MyDML();
+    fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance(
+      dmlOptions
+    );
+    for (Case c : cases) {
+      system.debug(
+        'Inside the SupportService -- processing this case: ' + c.id
+      );
+      //Database.DMLOptions dmlOpts = new Database.DMLOptions();
+      //dmlOpts.assignmentRuleHeader.assignmentRuleId= AR.id;
+      //dmlOpts.assignmentRuleHeader.useDefaultRule = true;
+      //Setting the DMLOption on Case instance
+      System.debug(
+        'This case ' +
+        c.Id +
+        ' --> Is added with these options: ' +
+        dmlOptions.getDMLOptions()
+      );
+      c.setOptions(dmlOptions.getDMLOptions());
+      uow.registerDirty(c);
+    }
     uow.commitWork();
   }
 }

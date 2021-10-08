@@ -18,6 +18,14 @@ public inherited sharing class Cases extends ApplicationDomain {
   public override void onApplyDefaults() {
   }
 
+  public override void onBeforeInsert() {
+  }
+
+  public override void onAfterInsert() {
+    Map<Id, Case> caseMap = new Map<Id, Case>((List<Case>) Records);
+    SupportService.setCaseAssignmentRule(caseMap.keySet());
+  }
+
   public void assignEntitlement(
     Case c,
     Id entitlementId,
