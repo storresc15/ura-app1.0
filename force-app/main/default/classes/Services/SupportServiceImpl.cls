@@ -109,5 +109,8 @@ public without sharing class SupportServiceImpl implements ISupportService {
     //Call the methods with a single uow and dml options
     setSupportEntitlement(caseIds, uow);
     setCaseAssignmentRule(caseIds, uow, dmlOptions);
+
+    //Commit work from the methods called
+    uow.commitWork();
   }
 }
