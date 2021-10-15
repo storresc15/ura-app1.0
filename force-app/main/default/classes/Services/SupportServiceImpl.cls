@@ -9,7 +9,8 @@ Developer                   Date                   Description
 -------------------------------------------------------------------------------
 Sebastian                 2021-09-17              Initial version
 
-Sebastiant                2021-10-07              Refactor the Service by implementing a facade pattern to group the entitlement and assignment rule methods together
+Sebastian                 2021-10-07              Refactor the Service by implementing a facade pattern to group the entitlement and assignment rule methods together
+Sebastian                 2021-10-14              Added the set entitlement method for the accounts as the SLA changes
 *******************************************************************************/
 public without sharing class SupportServiceImpl implements ISupportService {
   public void setSupportEntitlement(Set<Id> caseIds) {
@@ -111,6 +112,62 @@ public without sharing class SupportServiceImpl implements ISupportService {
     setCaseAssignmentRule(caseIds, uow, dmlOptions);
 
     //Commit work from the methods called
+    uow.commitWork();
+  }
+
+  //Method to automatically create an entitlement on Account
+  public void setEntitlementSupportOnAccount(Set<Id> accIds) {
+    //Instance of unit of work for updates
+    fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance();
+    //Call the utils class to get the entitlements form account
+    AccsEntitlementsUtil util = AccsEntitlementsUtil.getInstance(accIds);
+    BusinessHours bhs = [
+      SELECT id
+      FROM BusinessHours
+      WHERE IsDefault = TRUE
+      LIMIT 1
+    ];
+    //Retrieve the account from selector
+    AccountsSelector selector = new AccountsSelector();
+    List<Account> accs = selector.selectAccountWithCasesAndEntitlements(accIds);
+
+    //Check if the Account already has an active entitlment
+    for (Account a : accs) {
+      if (util.containsKey(a.id))
+        uow.registerDeleted(util.getEntitlement(a.id));
+      AdminSupportFactory.SupportDetails support = AdminSupportFactory.getSupportDetails(
+        a.SLA__c
+      );
+      //Throwing Exception if no support is found
+      if (support == null) {
+        throw new Application.URAAppException(
+          'No SLA could be found for ' +
+          a.SLA__c +
+          '. So we were not able to process a new entitlement for this account: ' +
+          a.id
+        );
+      }
+
+      Entitlement e = new Entitlement(
+        Name = a.SLA__C + ' : ' + a.Name,
+        AccountId = a.Id,
+        SlaProcessId = support.EntitlementProcess,
+        IsPerIncident = true,
+        CasesPerEntitlement = (Integer) support.AllowedTickets,
+        RemainingCases = (Integer) support.AllowedTickets,
+        BusinessHoursId = bhs.id,
+        StartDate = Date.today(),
+        EndDate = Date.today() + 365
+        //Status = Active
+      );
+      uow.registerNew(e);
+
+      //Check if this code works without the actual update on the field
+      for (Case c : a.cases) {
+        uow.registerDirty(c, case.EntitlementId, e);
+      }
+    }
+    //Commit the work
     uow.commitWork();
   }
 }

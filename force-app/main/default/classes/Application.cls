@@ -18,6 +18,7 @@ public class Application {
       Account.SObjectType,
       Contact.SObjectType,
       Opportunity.SObjectType,
+      Entitlement.SObjectType,
       Case.SObjectType,
       agf__PPM_Project__c.SObjectType,
       Bill__c.SObjectType,
@@ -112,5 +113,7 @@ public class Application {
     AuraHandledException error = new AuraHandledException(message);
     error.setMessage(message); // Ensure Apex tests can assert the error message value
     throw error;
+  }
+  public class URAAppException extends Exception {
   }
 }

@@ -26,11 +26,24 @@ public inherited sharing class AccountsSelector extends ApplicationSelector {
       Account.Name,
       Account.OwnerId,
       Account.AnnualRevenue,
-      Account.BillingPostalCode
+      Account.BillingPostalCode,
+      Account.SLA__c
     };
   }
   public Schema.SObjectType getSObjectType() {
     return Account.sObjectType;
+  }
+
+  //Method used to query by contact Ids
+  public List<Account> selectAccountWithCasesAndEntitlements(Set<Id> accIds) {
+    fflib_QueryFactory query = newQueryFactory();
+    query.setCondition('Id IN :accIds');
+
+    fflib_QueryFactory rsQF = query.subSelectQuery('Cases')
+      .selectFields(new Set<String>{ 'Id', 'entitlementid' })
+      .setCondition('AccountId in :accIds');
+
+    return (List<Account>) Database.query(query.toSOQL());
   }
 
   public List<Account> selectById(Set<ID> idSet) {

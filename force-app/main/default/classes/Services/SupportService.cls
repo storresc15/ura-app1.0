@@ -18,8 +18,12 @@ public with sharing class SupportService {
     service().setCaseAssignmentRule(caseIds);
   }
 
-  public void setEntitlementsAssigments(Set<Id> caseIds) {
+  public static void setEntitlementsAssigments(Set<Id> caseIds) {
     service().setEntitlementsAssigments(caseIds);
+  }
+
+  public static void setEntitlementSupportOnAccount(Set<Id> accIds) {
+    service().setEntitlementSupportOnAccount(accIds);
   }
 
   private static ISupportService service() {
