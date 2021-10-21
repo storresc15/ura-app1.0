@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Support_Feature__c</fullName>
+    <externalId>false</externalId>
+    <label>Support Feature</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Support_Product__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ExperienceCloud</fullName>
+                <default>false</default>
+                <label>ExperienceCloud</label>
+            </value>
+            <value>
+                <fullName>ServiceCloud</fullName>
+                <default>false</default>
+                <label>ServiceCloud</label>
+            </value>
+            <value>
+                <fullName>Apex Support</fullName>
+                <default>false</default>
+                <label>Apex Support</label>
+            </value>
+            <value>
+                <fullName>VF Support</fullName>
+                <default>false</default>
+                <label>VF Support</label>
+            </value>
+            <value>
+                <fullName>LWC</fullName>
+                <default>false</default>
+                <label>LWC</label>
+            </value>
+            <value>
+                <fullName>Aura</fullName>
+                <default>false</default>
+                <label>Aura</label>
+            </value>
+            <value>
+                <fullName>Express Routes</fullName>
+                <default>false</default>
+                <label>Express Routes</label>
+            </value>
+            <value>
+                <fullName>Express Middleware</fullName>
+                <default>false</default>
+                <label>Express Middleware</label>
+            </value>
+            <value>
+                <fullName>CORS</fullName>
+                <default>false</default>
+                <label>CORS</label>
+            </value>
+            <value>
+                <fullName>EC2</fullName>
+                <default>false</default>
+                <label>EC2</label>
+            </value>
+            <value>
+                <fullName>IAM</fullName>
+                <default>false</default>
+                <label>IAM</label>
+            </value>
+            <value>
+                <fullName>AWS Administration</fullName>
+                <default>false</default>
+                <label>AWS Administration</label>
+            </value>
+            <value>
+                <fullName>Spring App</fullName>
+                <default>false</default>
+                <label>Spring App</label>
+            </value>
+            <value>
+                <fullName>POJO</fullName>
+                <default>false</default>
+                <label>POJO</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Salesforce</controllingFieldValue>
+            <valueName>ExperienceCloud</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Salesforce</controllingFieldValue>
+            <valueName>ServiceCloud</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Salesforce</controllingFieldValue>
+            <valueName>Apex Support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Salesforce</controllingFieldValue>
+            <valueName>VF Support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Salesforce</controllingFieldValue>
+            <valueName>LWC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Salesforce</controllingFieldValue>
+            <valueName>Aura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>AWS</controllingFieldValue>
+            <valueName>EC2</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>AWS</controllingFieldValue>
+            <valueName>IAM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>AWS</controllingFieldValue>
+            <valueName>AWS Administration</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Express</controllingFieldValue>
+            <valueName>Express Routes</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Express</controllingFieldValue>
+            <valueName>Express Middleware</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Spring</controllingFieldValue>
+            <valueName>Spring App</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Spring</controllingFieldValue>
+            <valueName>POJO</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

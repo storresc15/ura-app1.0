@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Support_Product__c</fullName>
+    <externalId>false</externalId>
+    <label>Support Product</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Salesforce</fullName>
+                <default>true</default>
+                <label>Salesforce</label>
+            </value>
+            <value>
+                <fullName>AWS</fullName>
+                <default>false</default>
+                <label>AWS</label>
+            </value>
+            <value>
+                <fullName>Express</fullName>
+                <default>false</default>
+                <label>Express</label>
+            </value>
+            <value>
+                <fullName>React</fullName>
+                <default>false</default>
+                <label>React</label>
+            </value>
+            <value>
+                <fullName>Spring</fullName>
+                <default>false</default>
+                <label>Spring</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

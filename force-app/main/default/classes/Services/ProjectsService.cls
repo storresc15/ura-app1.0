@@ -11,6 +11,7 @@ Sebastian                 2021-08-05              Initial version
 *******************************************************************************/
 public with sharing class ProjectsService {
   public static void projectCheckout(Set<Id> oppIds) {
+    service().projectCheckout(oppIds);
   }
 
   public static void handleProjectsAccessToUsers(

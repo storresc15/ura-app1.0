@@ -23,7 +23,11 @@ public inherited sharing class OpportunitiesSelector extends ApplicationSelector
     return new List<Schema.SObjectField>{
       Opportunity.Id,
       Opportunity.Name,
-      Opportunity.OwnerId
+      Opportunity.OwnerId,
+      Opportunity.AccountId,
+      Opportunity.Planned_Start_Date__c,
+      Opportunity.Description,
+      Opportunity.Project_Type__c
     };
   }
 
