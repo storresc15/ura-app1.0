@@ -32,7 +32,8 @@ public class Application {
     new Map<Type, Type>{
       IProjectsService.class => ProjectsServiceImpl.class,
       IUserService.class => UserServiceImpl.class,
-      ISupportService.class => SupportServiceImpl.class
+      ISupportService.class => SupportServiceImpl.class,
+      IBillingService.class => BillingServiceImpl.class
     }
   );
 
