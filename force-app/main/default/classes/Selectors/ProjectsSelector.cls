@@ -38,4 +38,8 @@ public inherited sharing class ProjectsSelector extends ApplicationSelector {
   public List<agf__PPM_Project__c> selectById(Set<ID> idSet) {
     return (List<agf__PPM_Project__c>) selectSObjectsById(idSet);
   }
+
+  //Method used for the billing service to get the project and related cases information
+  public List<agf__PPM_Project__c> selectByIdWithCases(Set<Id> idSet) {
+  }
 }
