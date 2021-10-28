@@ -35,6 +35,15 @@ public inherited sharing class Cases extends ApplicationDomain {
     uow.registerDirty(c);
   }
 
+  public void updateBilling(
+    Case c,
+    Bill__c bill,
+    fflib_ISObjectUnitOfWork uow
+  ) {
+    c.Bill__c = bill.Id;
+    uow.registerDirty(c, Case.Bill__c, bill);
+  }
+
   public class Constructor implements fflib_SObjectDomain.IConstructable {
     public fflib_SObjectDomain construct(List<SObject> sObjectList) {
       return new Cases(sObjectList);

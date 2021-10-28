@@ -31,7 +31,8 @@ public inherited sharing class CasesSelector extends ApplicationSelector {
       Case.Support_Product__c,
       Case.Support_Feature__c,
       Case.EntitlementId,
-      Case.Type
+      Case.Type,
+      Case.Bill__c
     };
   }
   public Schema.SObjectType getSObjectType() {

@@ -27,7 +27,9 @@ public inherited sharing class OpportunitiesSelector extends ApplicationSelector
       Opportunity.AccountId,
       Opportunity.Planned_Start_Date__c,
       Opportunity.Description,
-      Opportunity.Project_Type__c
+      Opportunity.Project_Type__c,
+      Opportunity.StageName,
+      Opportunity.Amount
     };
   }
 

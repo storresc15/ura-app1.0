@@ -18,10 +18,10 @@ public class Application {
       Account.SObjectType,
       Contact.SObjectType,
       Opportunity.SObjectType,
+      Bill__c.SObjectType,
       Entitlement.SObjectType,
       Case.SObjectType,
       agf__PPM_Project__c.SObjectType,
-      Bill__c.SObjectType,
       User.SObjectType,
       PermissionSetAssignment.SObjectType
     }

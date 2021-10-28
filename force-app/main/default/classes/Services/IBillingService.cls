@@ -12,5 +12,5 @@ Sebastian                 2021-10-22              Initial version
 public interface IBillingService {
   void generateBillFromProjectCheckout(Set<Id> oppIds);
   void generateBillFromSupportProject(Set<Id> projectIds);
-  void generateBillFromSupportTickets(Set<Id> caseIds);
+  void generateBillFromSupportTickets(Account acc, Set<Id> caseIds);
 }

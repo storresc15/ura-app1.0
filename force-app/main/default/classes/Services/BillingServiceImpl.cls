@@ -46,17 +46,26 @@ public without sharing class BillingServiceImpl implements IBillingService {
     //Use uow and domain classes to delegate the creation of the Bill record
     fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance();
     Billings bills = new Billings(new List<Bill__c>());
+    Cases cases;
 
     //Iterate over the projects to get required informatio and create record
     //IMPORTANT!! Remember to replace the selector method with the one containing cases
-    for (agf__PPM_Project__c project : selector.selectById(projectIds)) {
-      Double Amount = CostSupportFactory.getTicketsCost(caseIds);
+    for (
+      agf__PPM_Project__c project : selector.selectByIdWithCases(projectIds)
+    ) {
+      cases = new Cases(project.Cases__r);
+      Double amount = CostSupportFactory.getTicketsCost(project.Cases__r);
+      Bill__c bill = bills.createBillFromProjectSupport(project, uow, amount);
+      for (case c : project.Cases__r) {
+        cases.updateBilling(c, bill, uow);
+      }
     }
 
     //commit the uow
+    uow.commitWork();
   }
 
-  public void generateBillFromSupportTickets(Set<Id> caseIds) {
+  public void generateBillFromSupportTickets(Account acc, Set<Id> caseIds) {
     //Use uow and domain classes to delegate the creation of the Bill record
     fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance();
     Billings bills = new Billings(new List<Bill__c>());
@@ -64,7 +73,10 @@ public without sharing class BillingServiceImpl implements IBillingService {
     Double Amount = CostSupportFactory.getTicketsCost(caseIds);
     //Get additional information for the bill from AccountIds?? Or add a parameter to probably search for accounts rather than only case Ids.
     //Consider replacing the below method with the correct bill from cases implementation
-    bills.createBillFromOpportunity();
+    bills.createBillFromCases(acc, uow, amount);
+
+    //commit the uow
+    uow.commitWork();
   }
 
   /*

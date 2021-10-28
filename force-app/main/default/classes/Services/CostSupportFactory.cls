@@ -12,14 +12,24 @@ Sebastian                 2021-09-17              Initial version
 public without sharing class CostSupportFactory {
   //Method to be used by billing services as it gets the total costs of cases
   public static Double getTicketsCost(Set<Id> caseIds) {
-    Double overallTicketCost = 0;
-
     //Call the case selector class to get the case from the caseIds
-    Map<String, Map<String, Integer>> supportMap = new Map<String, Map<String, Integer>>();
     //Instantiate the selector case class
     CasesSelector selector = new CasesSelector();
 
-    for (case c : selector.selectById(caseIds)) {
+    return getCost(selector.selectById(caseIds));
+  }
+
+  //Method to be used by billing services as it gets the total costs of cases
+  public static Double getTicketsCost(List<Case> caseList) {
+    return getCost(caseList);
+  }
+
+  private static Double getCost(List<Case> caseList) {
+    Double overallTicketCost = 0;
+
+    Map<String, Map<String, Integer>> supportMap = new Map<String, Map<String, Integer>>();
+
+    for (case c : caseList) {
       if (!supportMap.containsKey(c.Support_Product__c)) {
         supportMap.put(c.Support_Product__c, new Map<String, Integer>());
       }

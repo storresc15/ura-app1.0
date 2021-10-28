@@ -41,5 +41,9 @@ public inherited sharing class ProjectsSelector extends ApplicationSelector {
 
   //Method used for the billing service to get the project and related cases information
   public List<agf__PPM_Project__c> selectByIdWithCases(Set<Id> idSet) {
+    fflib_QueryFactory query = newQueryFactory();
+    query.setCondition('Id IN :idSet');
+    new CasesSelector().addQueryFactorySubselect(query, 'Cases__r');
+    return (List<agf__PPM_Project__c>) Database.query(query.toSOQL());
   }
 }

@@ -18,8 +18,11 @@ public with sharing class BillingService {
     service().generateBillFromSupportProject(projectIds);
   }
 
-  public static void generateBillFromSupportTickets(Set<Id> caseIds) {
-    service().generateBillFromSupportTickets(caseIds);
+  public static void generateBillFromSupportTickets(
+    Account acc,
+    Set<Id> caseIds
+  ) {
+    service().generateBillFromSupportTickets(acc, caseIds);
   }
 
   private static IBillingService service() {
