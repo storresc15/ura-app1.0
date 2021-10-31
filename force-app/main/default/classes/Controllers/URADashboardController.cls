@@ -59,8 +59,13 @@ public with sharing class URADashboardController {
   }
 
   @AuraEnabled(cacheable=true)
-  public static DashboardInfoWrapper getDashboardInfo(String accId) {
+  public static DashboardInfoWrapper getDashboardInfo() {
     try {
+      UsersSelector selector = new UsersSelector();
+      List<User> lstUser = selector.selectByIdWithAccountId(
+        new Set<Id>{ UserInfo.getUserId() }
+      );
+      String accId = lstUser[0].contact.AccountId;
       DashboardInfoWrapper dashboardInfo = new DashboardInfoWrapper();
       dashboardInfo.CaseCount = getCasesCount(accId);
       dashboardInfo.TotalBalance = getTotalBalance(accId);

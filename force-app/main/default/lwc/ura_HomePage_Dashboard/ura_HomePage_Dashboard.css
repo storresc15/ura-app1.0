@@ -1,3 +1,13 @@
-h1 {
-  background-color: blue;
+.cardHeader {
+  background-color: #088756;
+  color: #ffffff;
+  height: 2.5rem;
+  margin-top: -1.5rem;
+  font-size: 1.5rem;
+  border-radius: 3px;
+  text-align: center;
+}
+.largeNum {
+  font-size: 2.5rem;
+  text-align: center;
 }

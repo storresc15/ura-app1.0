@@ -49,6 +49,13 @@ public inherited sharing class UsersSelector extends ApplicationSelector {
     return (List<User>) Database.query(query.toSOQL());
   }
 
+  public List<User> selectByIdWithAccountId(Set<Id> idSet) {
+    fflib_QueryFactory query = newQueryFactory();
+    query.setCondition('Id IN :idSet');
+    query.selectField('contact.AccountId');
+    return (List<User>) Database.query(query.toSOQL());
+  }
+
   //,ethod to call for users with permission sets, to be updated to use selector subquery in the future
   public List<User> selectyByContactIdWithPermissionSets(Set<Id> conIds) {
     List<User> users = [

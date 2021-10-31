@@ -1,13 +1,27 @@
 <template>
   <template if:true={dashboardInfo}>
     <div class="slds-grid slds-wrap">
-      <div class="slds-col slds-size_1-of-1 slds-large-size_8-of-12">
-        <lightning-card title="My Cases">
-          <div class="slds-m-around_medium">
-            Total Cases: {dashboardInfo.CaseCount}
+      <div class="slds-col slds-size_2-of-6 slds-large-size_3-of-12">
+        <lightning-card>
+          <h2 class="cardHeader">My Open Cases</h2>
+          <div class="slds-m-around_medium largeNum">
+            {dashboardInfo.CaseCount}
           </div>
         </lightning-card>
-        <lightning-card title="My Projects">
+      </div>
+
+      <div class="slds-col slds-size_1-of-6 slds-large-size_3-of-12">
+        <lightning-card>
+          <h2 class="cardHeader">My Billing</h2>
+          <div class="slds-m-around_medium largeNum">
+            ${dashboardInfo.TotalBalance}
+          </div>
+        </lightning-card>
+      </div>
+
+      <div class="slds-col slds-size_3-of-6 slds-large-size_6-of-12">
+        <lightning-card>
+          <h2 class="cardHeader">My Active Projects</h2>
           <div class="slds-m-around_medium">
             <template for:each={dashboardInfo.projectsInfo} for:item="project">
               <p key={project.ProjectName}>
@@ -18,13 +32,6 @@
                 Account: {project.ProjectAccount}
               </p>
             </template>
-          </div>
-        </lightning-card>
-      </div>
-      <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
-        <lightning-card title="My Billing">
-          <div class="slds-m-around_medium">
-            Total Balance: ${dashboardInfo.TotalBalance}
           </div>
         </lightning-card>
       </div>
