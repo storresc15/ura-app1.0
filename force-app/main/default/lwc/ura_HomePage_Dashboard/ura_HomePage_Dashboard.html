@@ -1,0 +1,33 @@
+<template>
+  <template if:true={dashboardInfo}>
+    <div class="slds-grid slds-wrap">
+      <div class="slds-col slds-size_1-of-1 slds-large-size_8-of-12">
+        <lightning-card title="My Cases">
+          <div class="slds-m-around_medium">
+            Total Cases: {dashboardInfo.CaseCount}
+          </div>
+        </lightning-card>
+        <lightning-card title="My Projects">
+          <div class="slds-m-around_medium">
+            <template for:each={dashboardInfo.projectsInfo} for:item="project">
+              <p key={project.ProjectName}>
+                Project Name: {project.ProjectName}
+              </p>
+              <p key={project.ScrumTeam}>Team: {project.ScrumTeam}</p>
+              <p key={project.ProjectAccount}>
+                Account: {project.ProjectAccount}
+              </p>
+            </template>
+          </div>
+        </lightning-card>
+      </div>
+      <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+        <lightning-card title="My Billing">
+          <div class="slds-m-around_medium">
+            Total Balance: ${dashboardInfo.TotalBalance}
+          </div>
+        </lightning-card>
+      </div>
+    </div>
+  </template>
+</template>

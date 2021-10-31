@@ -24,6 +24,9 @@ public with sharing class BillingService {
   ) {
     service().generateBillFromSupportTickets(acc, caseIds);
   }
+  public static Double getBalanceForUraApp(Set<Id> accIds) {
+    return service().getBalanceForUraApp(accIds);
+  }
 
   private static IBillingService service() {
     return (IBillingService) Application.Service.newInstance(

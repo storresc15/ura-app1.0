@@ -13,4 +13,5 @@ public interface IBillingService {
   void generateBillFromProjectCheckout(Set<Id> oppIds);
   void generateBillFromSupportProject(Set<Id> projectIds);
   void generateBillFromSupportTickets(Account acc, Set<Id> caseIds);
+  Double getBalanceForUraApp(Set<Id> accIds);
 }

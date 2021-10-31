@@ -39,6 +39,14 @@ public inherited sharing class ProjectsSelector extends ApplicationSelector {
     return (List<agf__PPM_Project__c>) selectSObjectsById(idSet);
   }
 
+  public List<agf__PPM_Project__c> selectByAccountId(Set<ID> idSet) {
+    fflib_QueryFactory query = newQueryFactory();
+    query.selectField('Account__r.Name');
+    query.selectField('agf__Delivery_Scrum_Team__r.name');
+    query.setCondition('Account__c IN :idSet');
+    return (List<agf__PPM_Project__c>) Database.query(query.toSOQL());
+  }
+
   //Method used for the billing service to get the project and related cases information
   public List<agf__PPM_Project__c> selectByIdWithCases(Set<Id> idSet) {
     fflib_QueryFactory query = newQueryFactory();

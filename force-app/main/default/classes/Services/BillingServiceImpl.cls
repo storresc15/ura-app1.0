@@ -79,6 +79,18 @@ public without sharing class BillingServiceImpl implements IBillingService {
     uow.commitWork();
   }
 
+  /*Simple method to retrieve the total amount due to a customer in the URA Homepage dashboard */
+  public Double getBalanceForUraApp(Set<Id> accIds) {
+    BillingsSelector selector = (BillingsSelector) Application.Selector.newInstance(
+      Bill__c.SObjectTYpe
+    );
+    Double result = 0;
+    for (Bill__c bill : selector.selectByAccountId(accIds)) {
+      result += bill.Amount__c;
+    }
+    return result;
+  }
+
   /*
     Following method is not included in the Interface contract yet, should be implemented once we have the billing api running--- this method will be called from external system and will handle the response to create a bill record in SFDC (Consider also the global)
     global void handleBillCreationFromAPI(Set<Id> recordIds) {

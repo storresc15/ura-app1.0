@@ -42,4 +42,9 @@ public inherited sharing class CasesSelector extends ApplicationSelector {
   public List<Case> selectById(Set<ID> idSet) {
     return (List<Case>) selectSObjectsById(idSet);
   }
+
+  public Integer getCasesCountByAccountId(Set<ID> idSet) {
+    Integer count = [SELECT COUNT() FROM Case WHERE AccountId IN :idSet];
+    return count;
+  }
 }

@@ -46,7 +46,8 @@ public class Application {
       Case.SObjectType => CasesSelector.class, //Added the case selector class here
       Opportunity.SObjectType => OpportunitiesSelector.class,
       agf__PPM_Project__c.SObjectType => ProjectsSelector.class,
-      User.SObjectType => UsersSelector.class
+      User.SObjectType => UsersSelector.class,
+      Bill__c.SObjectType => BillingsSelector.class
     }
   );
 
