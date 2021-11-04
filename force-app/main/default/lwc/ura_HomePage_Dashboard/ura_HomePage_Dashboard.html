@@ -1,7 +1,7 @@
 <template>
   <template if:true={dashboardInfo}>
     <div class="slds-grid slds-wrap">
-      <div class="slds-col slds-size_2-of-6 slds-large-size_3-of-12">
+      <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
         <lightning-card>
           <h2 class="cardHeader">My Open Cases</h2>
           <div class="slds-m-around_medium largeNum">
@@ -10,25 +10,30 @@
         </lightning-card>
       </div>
 
-      <div class="slds-col slds-size_1-of-6 slds-large-size_3-of-12">
+      <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
         <lightning-card>
-          <h2 class="cardHeader">My Billing</h2>
+          <h2 class="cardHeader">My Billing Balance</h2>
           <div class="slds-m-around_medium largeNum">
             ${dashboardInfo.TotalBalance}
           </div>
         </lightning-card>
       </div>
 
-      <div class="slds-col slds-size_3-of-6 slds-large-size_6-of-12">
+      <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12">
         <lightning-card>
           <h2 class="cardHeader">My Active Projects</h2>
           <div class="slds-m-around_medium">
+            <template if:false={hasProjects}>
+              <p class="project_details">No Active Projects</p>
+            </template>
             <template for:each={dashboardInfo.projectsInfo} for:item="project">
-              <p key={project.ProjectName}>
+              <p class="project_title" key={project.ProjectName}>
                 Project Name: {project.ProjectName}
               </p>
-              <p key={project.ScrumTeam}>Team: {project.ScrumTeam}</p>
-              <p key={project.ProjectAccount}>
+              <p class="project_details" key={project.ScrumTeam}>
+                Team: {project.ScrumTeam}
+              </p>
+              <p class="project_details" key={project.ProjectAccount}>
                 Account: {project.ProjectAccount}
               </p>
             </template>
