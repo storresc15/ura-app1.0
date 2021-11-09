@@ -54,4 +54,26 @@ public inherited sharing class ProjectsSelector extends ApplicationSelector {
     new CasesSelector().addQueryFactorySubselect(query, 'Cases__r');
     return (List<agf__PPM_Project__c>) Database.query(query.toSOQL());
   }
+
+  /*  
+  Method used for the Ura App project page, retreving the projects, stories and epics from project object
+  */
+  public List<agf__PPM_Project__c> selectByAccIdWithSprintsAndEpics(
+    Set<Id> idSet
+  ) {
+    Set<String> epicFields = new Set<String>{ 'Id', 'Name' };
+    Set<String> sprintFields = new Set<String>{
+      'Id',
+      'Name',
+      'Project__c',
+      'Project__c.Name'
+    };
+    fflib_QueryFactory query = newQueryFactory();
+    query.setCondition('account__c IN :idSet');
+    fflib_QueryFactory rsQF = query.subSelectQuery('agf__Epics__r')
+      .selectFields(epicFields);
+    fflib_QueryFactory ssQF = query.subSelectQuery('Sprints__r')
+      .selectFields(sprintFields);
+    return (List<agf__PPM_Project__c>) Database.query(query.toSOQL());
+  }
 }
