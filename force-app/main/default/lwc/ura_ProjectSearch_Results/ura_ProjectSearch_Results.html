@@ -1,0 +1,47 @@
+<template>
+  <lightning-tabset variant="scoped">
+    <lightning-tab label="Stories">
+      <template if:true={stories}>
+        <div class="slds-scrollable_y">
+          <!-- layout horizontally aligned to the center  -->
+          <!-- layout allowing multiple rows -->
+          <lightning-layout horizontal-align="center" multiple-rows>
+            <!-- template looping through each boat -->
+            <template for:each={stories} for:item="story">
+              <!-- lightning-layout-item for each boat -->
+              <lightning-layout-item
+                key={story.StoryNumber}
+                padding="around-small"
+                size="12"
+                small-device-size="6"
+                medium-device-size="4"
+                large-device-size="3"
+              >
+                <!-- Each BoatTile goes here -->
+                <c-ura_-story-tile
+                  story={story}
+                  onboatselect={updateSelectedTile}
+                  selected-boat-id={selectedBoatId}
+                ></c-ura_-story-tile>
+                <!--<p>{story.StoryTitle}</p>
+                    <p>{story.StoryNumber}</p>
+                    <p>{story.StoryStatus}</p>
+                    <p>{story.StoryEpic}</p> -->
+              </lightning-layout-item>
+            </template>
+          </lightning-layout>
+        </div>
+      </template>
+    </lightning-tab>
+    <!-- <lightning-tab label="Boat Editor">
+           Scrollable div and lightning datatable go here 
+          <div class="slds-scrollable_y">
+            <lightning-datatable key-field="Id" data={boats} onsave={handleSave} columns={columns} draft-values={draftValues} hide-checkbox-column></lightning-datatable>
+          </div>
+        </lightning-tab> -->
+    <lightning-tab label="Boats Near Me">
+      <!-- boatsNearMe component goes here 
+            <c-boats-near-me boat-type-id={boatTypeId}></c-boats-near-me> -->
+    </lightning-tab>
+  </lightning-tabset>
+</template>

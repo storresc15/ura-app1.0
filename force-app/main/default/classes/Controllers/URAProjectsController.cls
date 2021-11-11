@@ -9,12 +9,17 @@ Developer                   Date                   Description
 ----------------------------------------------------------------------------------
 Sebastian                 2021-11-03              Initial version
 *******************************************************************************/
-public with sharing class URAProjectsController {
-  @AuraEnabled
-  public static List<ProjectWrapper> getProjects(String AccId) {
+public without sharing class URAProjectsController {
+  @AuraEnabled(cacheable=true)
+  public static List<ProjectWrapper> getProjects() {
     List<ProjectWrapper> projectData = new List<ProjectWrapper>();
 
     try {
+      UsersSelector selector = new UsersSelector();
+      List<User> lstUser = selector.selectByIdWithAccountId(
+        new Set<Id>{ UserInfo.getUserId() }
+      );
+      String accId = lstUser[0].contact.AccountId;
       ProjectsSelector projectSelector = (ProjectsSelector) Application.Selector.newInstance(
         agf__PPM_Project__c.SObjectType
       );
@@ -22,7 +27,7 @@ public with sharing class URAProjectsController {
         agf__ADM_Work__c.SObjectType
       );
       List<agf__PPM_Project__c> projectsList = projectSelector.selectByAccIdWithSprintsAndEpics(
-        new Set<Id>{ AccId }
+        new Set<Id>{ accId }
       );
 
       Set<Id> sprintSet = new Set<Id>();

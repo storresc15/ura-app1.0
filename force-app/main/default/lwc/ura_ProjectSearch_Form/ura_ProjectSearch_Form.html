@@ -1,0 +1,40 @@
+<template>
+  <lightning-layout>
+    <lightning-layout-item class="slds-align-middle">
+      <p>Search for a Project</p>
+      <lightning-combobox
+        value={selectedProjectTypeId}
+        options={projectOptions}
+        onchange={handleProjectOptionChange}
+        class="slds-align-middle"
+      ></lightning-combobox>
+    </lightning-layout-item>
+    <lightning-layout-item class="slds-align-middle">
+      <p>Search for a Sprint</p>
+      <lightning-combobox
+        value={selectedSprintTypeId}
+        options={sprintOptions}
+        onchange={handleSprintOptionChange}
+        class="slds-align-middle"
+      ></lightning-combobox>
+    </lightning-layout-item>
+  </lightning-layout>
+
+  <lightning-layout>
+    <lightning-layout-item size="12" class="slds-p-top_small slds-is-relative">
+      <!-- Spinner goes here -->
+      <template if:true={isLoading}>
+        <lightning-spinner
+          alternative-text="Loading"
+          variant="brand"
+        ></lightning-spinner>
+      </template>
+      <!-- Project SearchResults goes here -->
+      <!-- <c-ura_-project-search_-results onloading={handleLoading} ondoneloading={handleDoneLoading}></c-ura_-project-search_-results> -->
+      <c-ura_-project-search_-results
+        stories={selectedUserStories}
+      ></c-ura_-project-search_-results>
+      <!-- onloading={handleLoading} ondoneloading={handleDoneLoading} -->
+    </lightning-layout-item>
+  </lightning-layout>
+</template>

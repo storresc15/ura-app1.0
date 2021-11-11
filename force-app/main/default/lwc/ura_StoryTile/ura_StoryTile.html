@@ -1,0 +1,21 @@
+<template>
+  <div onclick={selectBoat} class={tileClass}>
+    <div style={backgroundStyle} class="tile"></div>
+    <div class="lower-third">
+      <!-- Boat information goes here -->
+      <h1 class="slds-text-heading_small">{story.StoryTitle}</h1>
+      <h2 class="slds-truncate slds-text-body_medium">{story.StoryNumber}</h2>
+      <div class="slds-text-body_small">
+        Due Date:
+        <p>
+          <lightning-formatted-date-time
+            value={story.StoryDate}
+          ></lightning-formatted-date-time>
+        </p>
+      </div>
+      <div class="slds-text-body_small">Status: {story.StoryStatus}</div>
+      <div class="slds-text-body_small">StoryEpic: {story.StoryEpic}</div>
+      <div class="slds-text-body_small">Sprint: {story.StorySprint}</div>
+    </div>
+  </div>
+</template>
