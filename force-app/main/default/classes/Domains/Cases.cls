@@ -23,7 +23,35 @@ public inherited sharing class Cases extends ApplicationDomain {
 
   public override void onAfterInsert() {
     Map<Id, Case> caseMap = new Map<Id, Case>((List<Case>) Records);
-    SupportService.setCaseAssignmentRule(caseMap.keySet());
+    SupportService.setEntitlementsAssigments(caseMap.keySet());
+  }
+
+  public override void onAfterUpdate(Map<Id, sObject> existingRecords) {
+    SupportService.setSupportEntitlement(
+      getQualifyingRecordsToUpdateEntitlement(
+        (List<Case>) Records,
+        existingRecords
+      )
+    );
+  }
+
+  public Set<Id> getQualifyingRecordsToUpdateEntitlement(
+    List<Case> Records,
+    Map<Id, sObject> existingRecords
+  ) {
+    Set<Id> selectedCases = new Set<Id>();
+    Map<Id, Case> casesOldMap = new Map<ID, Case>(
+      (List<Case>) existingRecords.values()
+    );
+    for (Case c : Records) {
+      if (
+        c.EntitlementId == null ||
+        c.EntitlementId != casesOldMap.get(c.id).EntitlementId
+      ) {
+        selectedCases.add(c.id);
+      }
+    }
+    return selectedCases;
   }
 
   public void assignEntitlement(
