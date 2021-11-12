@@ -20,8 +20,8 @@
                 <!-- Each BoatTile goes here -->
                 <c-ura_-story-tile
                   story={story}
-                  onboatselect={updateSelectedTile}
-                  selected-boat-id={selectedBoatId}
+                  onstoryselect={updateSelectedTile}
+                  selected-story-id={selectedBoatId}
                 ></c-ura_-story-tile>
                 <!--<p>{story.StoryTitle}</p>
                     <p>{story.StoryNumber}</p>
@@ -39,7 +39,7 @@
             <lightning-datatable key-field="Id" data={boats} onsave={handleSave} columns={columns} draft-values={draftValues} hide-checkbox-column></lightning-datatable>
           </div>
         </lightning-tab> -->
-    <lightning-tab label="Boats Near Me">
+    <lightning-tab label="Additional">
       <!-- boatsNearMe component goes here 
             <c-boats-near-me boat-type-id={boatTypeId}></c-boats-near-me> -->
     </lightning-tab>

@@ -95,6 +95,7 @@ public without sharing class URAProjectsController {
     List<StoriesWrapper> stories = new List<StoriesWrapper>();
     for (agf__ADM_Work__c story : sotriesList) {
       StoriesWrapper wrapper = new StoriesWrapper();
+      wrapper.StoryId = story.Id;
       wrapper.StoryNumber = story.Name;
       wrapper.StoryTitle = story.agf__Subject__c;
       wrapper.StoryDescription = story.agf__Details__c;
@@ -132,6 +133,8 @@ public without sharing class URAProjectsController {
   }
 
   public class StoriesWrapper {
+    @AuraEnabled
+    public String StoryId;
     @AuraEnabled
     public String StoryNumber;
     @AuraEnabled

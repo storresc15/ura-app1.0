@@ -54,13 +54,15 @@ export default class Ura_ProjectSearch_Results extends LightningElement {
 
   // this function must update selectedBoatId and call sendMessageService
   updateSelectedTile(event) {
-    this.selectedBoatId = event.detail.boatId;
+    this.selectedBoatId = event.detail.storyId;
+    console.log("The selected story id: " + this.selectedBoatId);
     this.sendMessageService(this.selectedBoatId);
   }
 
   // Publishes the selected boat Id on the BoatMC.
   sendMessageService(boatId) {
     // explicitly pass boatId to the parameter recordId
+    console.log("Sending this message with record id: " + boatId);
     publish(this.messageContext, BOATMC, { recordId: boatId });
   }
 

@@ -1,7 +1,7 @@
 <template>
   <lightning-layout>
     <lightning-layout-item class="slds-align-middle">
-      <p>Search for a Project</p>
+      <p>Select your Project</p>
       <lightning-combobox
         value={selectedProjectTypeId}
         options={projectOptions}
@@ -10,7 +10,7 @@
       ></lightning-combobox>
     </lightning-layout-item>
     <lightning-layout-item class="slds-align-middle">
-      <p>Search for a Sprint</p>
+      <p>Select a Sprint</p>
       <lightning-combobox
         value={selectedSprintTypeId}
         options={sprintOptions}
@@ -30,7 +30,7 @@
         ></lightning-spinner>
       </template>
       <!-- Project SearchResults goes here -->
-      <!-- <c-ura_-project-search_-results onloading={handleLoading} ondoneloading={handleDoneLoading}></c-ura_-project-search_-results> -->
+      <!--<c-ura_-project-search_-results onloading={handleLoading} ondoneloading={handleDoneLoading}></c-ura_-project-search_-results> -->
       <c-ura_-project-search_-results
         stories={selectedUserStories}
       ></c-ura_-project-search_-results>

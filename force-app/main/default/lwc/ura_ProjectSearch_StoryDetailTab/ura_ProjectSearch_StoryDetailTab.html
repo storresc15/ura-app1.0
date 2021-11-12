@@ -1,1 +1,52 @@
-<template> </template>
+<template>
+  <template if:false={wiredRecord.data}>
+    <lightning-card>
+      <!-- lightning card for the label when wiredRecord has no data goes here  -->
+      <span class="slds-align_absolute-center no-boat-height"
+        >Select a Story</span
+      >
+    </lightning-card>
+  </template>
+  <template if:true={wiredRecord.data}>
+    <lightning-tabset variant="scoped">
+      <lightning-tab label="Details">
+        <lightning-card title={boatName} icon-name={detailsTabIconName}>
+          <lightning-button
+            label="Full Details"
+            onclick={navigateToRecordViewPage}
+            slot="actions"
+          ></lightning-button>
+          <lightning-record-view-form
+            record-id={boatId}
+            object-api-name="agf__ADM_Work__c"
+            density="compact"
+          >
+            <lightning-output-field field-name="Name"></lightning-output-field>
+            <lightning-output-field
+              field-name="agf__Subject__c"
+            ></lightning-output-field>
+            <lightning-output-field
+              field-name="agf__Epic__c"
+            ></lightning-output-field>
+            <lightning-output-field
+              field-name="agf__Scrum_Team_Name__c"
+            ></lightning-output-field>
+            <lightning-output-field
+              field-name="agf__Sprint_Name__c"
+            ></lightning-output-field>
+            <lightning-output-field
+              field-name="agf__Status__c"
+            ></lightning-output-field>
+            <lightning-output-field
+              field-name="agf__Details__c"
+            ></lightning-output-field>
+          </lightning-record-view-form>
+        </lightning-card>
+      </lightning-tab>
+      <lightning-tab label="Add Review">
+        <!--<c-boat-add-review-form record-id={boatId} oncreatereview={handleReviewCreated}></c-boat-add-review-form> -->
+      </lightning-tab>
+    </lightning-tabset>
+    <!-- lightning card for the content when wiredRecord has data goes here  -->
+  </template>
+</template>
