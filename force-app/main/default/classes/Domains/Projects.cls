@@ -18,6 +18,53 @@ public inherited sharing class Projects extends ApplicationDomain {
   public override void onApplyDefaults() {
   }
 
+  public override void onAfterUpdate(Map<Id, sObject> existingRecords) {
+    /*ProjectsService.handleProjectsAccessToUsers(getQualifiedProjectsforUserGrantAccess((List<agf__PPM_Project__c>) Records,
+     existingRecords));*/
+    getQualifiedProjectsforUserGrantAccess(
+      (List<agf__PPM_Project__c>) Records,
+      existingRecords
+    );
+  }
+
+  public void getQualifiedProjectsforUserGrantAccess(
+    List<agf__PPM_Project__c> Records,
+    Map<Id, sObject> existingRecords
+  ) {
+    List<AsyncRequest__c> newAsyncRequests = new List<AsyncRequest__c>();
+
+    List<String> textChangedIds = new List<ID>();
+
+    Map<Id, agf__PPM_Project__c> projectsOldMap = new Map<ID, agf__PPM_Project__c>(
+      (List<agf__PPM_Project__c>) existingRecords.values()
+    );
+    Set<Id> projectIds = new Set<Id>();
+
+    for (agf__PPM_Project__c project : Records) {
+      if (project.Active__c != projectsOldMap.get(project.id).Active__c) {
+        textChangedIds.add(project.Id);
+        if (textChangedIds.size() > 100) {
+          newAsyncRequests.add(
+            new AsyncRequest__c(
+              AsyncType__c = 'HandleUserPermission',
+              Params__c = string.Join(textChangedIds, ',')
+            )
+          );
+          textChangedIds.clear();
+        }
+      }
+    }
+    if (textChangedIds.size() > 0) {
+      newAsyncRequests.add(
+        new AsyncRequest__c(
+          AsyncType__c = 'HandleUserPermission',
+          Params__c = string.Join(textChangedIds, ',')
+        )
+      );
+    }
+    insert newAsyncRequests;
+  }
+
   //Methods
   public void createProjectsFromOpps(
     fflib_ISObjectUnitOfWork uow,

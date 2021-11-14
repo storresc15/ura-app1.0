@@ -14,11 +14,8 @@ public with sharing class ProjectsService {
     service().projectCheckout(oppIds);
   }
 
-  public static void handleProjectsAccessToUsers(
-    Set<Id> conIds,
-    Boolean activeProject
-  ) {
-    service().handleProjectsAccessToUsers(conIds, activeProject);
+  public static void handleProjectsAccessToUsers(Set<Id> projectids) {
+    service().handleProjectsAccessToUsers(projectids);
   }
 
   private static IProjectsService service() {

@@ -4,10 +4,11 @@ Description     : Main Class for project service implementation
 Created By      : Sebastian Torres
 Created Date    : 2021-07-28
 Modification Log:
----------------------------------------------------------------------------------- 
+------------------------------------------------------------------------------- 
 Developer                   Date                   Description
-----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 Sebastian                 2021-08-05              Initial version
+Sebastian                 2021-11-13              Updated method to accept project instead of set of contact id
 *******************************************************************************/
 public inherited sharing class ProjectsServiceImpl implements IProjectsService {
   public void projectCheckout(Set<Id> oppIds) {
@@ -40,37 +41,69 @@ public inherited sharing class ProjectsServiceImpl implements IProjectsService {
     uow.commitWork();
   }
 
-  public void handleProjectsAccessToUsers(
-    Set<Id> conIds,
-    Boolean activeProject
-  ) {
+  public void handleProjectsAccessToUsers(Set<Id> projectids) {
     //Set Unit of work
     fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance();
 
+    //Map of Accounts-Contact/Users
+    Map<Id, Map<Id, User>> accConUserMap = new Map<Id, Map<Id, User>>();
+
+    Set<Id> conIds = new Set<Id>();
+    List<Contact> conList = new List<Contact>();
+
+    for (
+      agf__PPM_Project__c project : new ProjectsSelector()
+        .selectById(projectids)
+    ) {
+      if (!accConUserMap.containsKey(project.Account__c)) {
+        accConUserMap.put(project.Account__c, new Map<Id, User>());
+      }
+    }
+    //Iterate over contacts by accountId
+    for (
+      Account a : new AccountsSelector()
+        .selectAccountWithContacts(accConUserMap.keySet())
+    ) {
+      for (Contact c : a.contacts) {
+        conIds.add(c.id);
+        conList.add(c);
+        accConUserMap.get(c.AccountId).put(c.id, new User());
+      }
+    }
+
     //Retrive all the users from Account's related contacts (Consider also person account here)
     UsersSelector userSelector = new UsersSelector();
-    List<User> userList = userSelector.selectyByContactIdWithPermissionSets(
+    Map<Id, User> userMap = userSelector.selectyByContactIdWithPermissionSetsMap(
       conIds
     );
 
+    for (Contact c : conList) {
+      accConUserMap.get(c.AccountId).put(c.id, userMap.get(c.id));
+    }
     //Delegate to Users Domain Class
     //Users users = (Users) Application.Domain.newInstance(new List<User>());
-    Users users = new Users(userList);
+    Users users = new Users(userMap.values());
 
     //Find the permission set Id to set to users
     Id psId = '0PS5e0000050KRSGA2';
 
-    //Iterate over the users and grant or remove the permission set
-    if (activeProject) {
-      for (User u : userList) {
-        users.assignPermissionSetOnUser(u, psId, uow);
-      }
-    } else if (!activeProject) {
-      for (User u : userList) {
-        users.removePermissionSetOnUser(u, psId, uow);
+    //The main iteration to update permission sets
+    for (
+      agf__PPM_Project__c project : new ProjectsSelector()
+        .selectById(projectids)
+    ) {
+      for (Id contactId : accConUserMap.get(project.Account__c).keySet()) {
+        //Iterate over the users and grant or remove the permission set
+        if (accConUserMap.get(project.Account__c).get(contactId) != null) {
+          User u = accConUserMap.get(project.Account__c).get(contactId);
+          if (project.Active__c) {
+            users.assignPermissionSetOnUser(u, psId, uow);
+          } else if (!project.Active__c) {
+            users.removePermissionSetOnUser(u, psId, uow);
+          }
+        }
       }
     }
-    //Commit the uow
     uow.commitWork();
   }
 }

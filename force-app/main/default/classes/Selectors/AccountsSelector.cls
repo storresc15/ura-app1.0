@@ -8,6 +8,7 @@ Modification Log:
 Developer                   Date                   Description
 ----------------------------------------------------------------------------------
 Sebastian                 2021-08-05              Initial version
+Sebastian                 2021-11-13              Added the select by id with contacts
 *******************************************************************************/
 public inherited sharing class AccountsSelector extends ApplicationSelector {
   public AccountsSelector() {
@@ -41,6 +42,17 @@ public inherited sharing class AccountsSelector extends ApplicationSelector {
 
     fflib_QueryFactory rsQF = query.subSelectQuery('Cases')
       .selectFields(new Set<String>{ 'Id', 'entitlementid' })
+      .setCondition('AccountId in :accIds');
+
+    return (List<Account>) Database.query(query.toSOQL());
+  }
+
+  public List<Account> selectAccountWithContacts(Set<Id> accIds) {
+    fflib_QueryFactory query = newQueryFactory();
+    query.setCondition('Id IN :accIds');
+
+    fflib_QueryFactory rsQF = query.subSelectQuery('Contacts')
+      .selectFields(new Set<String>{ 'Id', 'AccountId' })
       .setCondition('AccountId in :accIds');
 
     return (List<Account>) Database.query(query.toSOQL());

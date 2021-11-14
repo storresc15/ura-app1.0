@@ -56,7 +56,23 @@ public inherited sharing class UsersSelector extends ApplicationSelector {
     return (List<User>) Database.query(query.toSOQL());
   }
 
-  //,ethod to call for users with permission sets, to be updated to use selector subquery in the future
+  public Map<Id, User> selectyByContactIdWithPermissionSetsMap(Set<Id> conIds) {
+    Map<Id, User> resultMap = new Map<Id, User>();
+    for (User u : [
+      SELECT
+        ID,
+        USERNAME,
+        ContactId,
+        (SELECT ID, PermissionSetId FROM PermissionSetAssignments)
+      FROM USER
+      WHERE ContactId IN :conIds
+    ]) {
+      resultMap.put(u.contactId, u);
+    }
+    return resultMap;
+  }
+
+  //Method to call for users with permission sets, to be updated to use selector subquery in the future
   public List<User> selectyByContactIdWithPermissionSets(Set<Id> conIds) {
     List<User> users = [
       SELECT

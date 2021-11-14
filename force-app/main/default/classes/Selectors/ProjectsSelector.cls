@@ -27,7 +27,8 @@ public inherited sharing class ProjectsSelector extends ApplicationSelector {
       agf__PPM_Project__c.agf__Delivery_Scrum_Team__c,
       agf__PPM_Project__c.agf__Development_Lead__c,
       agf__PPM_Project__c.Account__c,
-      agf__PPM_Project__c.Opportunity__c
+      agf__PPM_Project__c.Opportunity__c,
+      agf__PPM_Project__c.Active__c
     };
   }
 
