@@ -17,7 +17,7 @@ public inherited sharing class UserServiceImpl implements IUserService {
     fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance();
 
     //Have this profile selected by conditions, not hardcoded
-    Profile p = [SELECT id FROM Profile WHERE name = 'Customer Community User'];
+    Profile p = [SELECT id FROM Profile WHERE name = 'URA Customer User'];
 
     //Select the contact by id contact selector
     ContactsSelector contactSelector = new ContactsSelector();

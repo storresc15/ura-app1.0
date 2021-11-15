@@ -15,6 +15,10 @@ public without sharing class AsyncJobFactory {
 
     if (jobName == 'HandleUserPermission')
       job = new AsyncHandleProjectAccess();
+    if (jobName == 'HandleUserActivation')
+      job = new AsyncHandleUserCreation();
+    if (jobName == 'HandleUserDeactivation')
+      job = new AsyncHandleUserDeactivation();
     //implement rest of async processes
 
     return job;
