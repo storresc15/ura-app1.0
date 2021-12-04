@@ -51,7 +51,9 @@ public without sharing class BillingServiceImpl implements IBillingService {
     //Iterate over the projects to get required informatio and create record
     //IMPORTANT!! Remember to replace the selector method with the one containing cases
     for (
-      agf__PPM_Project__c project : selector.selectByIdWithCases(projectIds)
+      agf__PPM_Project__c project : selector.selectByIdWithCasesNotBilled(
+        projectIds
+      )
     ) {
       cases = new Cases(project.Cases__r);
       Double amount = CostSupportFactory.getTicketsCost(project.Cases__r);
