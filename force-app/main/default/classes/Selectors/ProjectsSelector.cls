@@ -28,7 +28,8 @@ public inherited sharing class ProjectsSelector extends ApplicationSelector {
       agf__PPM_Project__c.agf__Development_Lead__c,
       agf__PPM_Project__c.Account__c,
       agf__PPM_Project__c.Opportunity__c,
-      agf__PPM_Project__c.Active__c
+      agf__PPM_Project__c.Active__c,
+      agf__PPM_Project__c.agf__Category__c
     };
   }
 
@@ -82,5 +83,11 @@ public inherited sharing class ProjectsSelector extends ApplicationSelector {
 
   //Method to be used in batch class for billing
   public Set<Id> queryLocatorProjectsReadyToBill() {
+    //In future consider updating this to the billing date on project as dependent field to Category
+    return Database.getQueryLocator(
+      newQueryFactory()
+        .setCondition('agf__Category__c = \'\'Support\'\' AND Active__c = TRUE')
+        .toSOQL()
+    );
   }
 }

@@ -9,19 +9,19 @@ global with sharing class BillingSupportProjects_BatchService implements System.
 
   public Database.QueryLocator start(Database.BatchableContext context) {
     // Obtain appropriate query locator from the selector
-    return new OpportunitiesSelector().queryLocatorReadyToInvoice();
+    return new ProjectsSelector().queryLocatorProjectsReadyToBill();
   }
 
   public void execute(
     Database.BatchableContext context,
-    List<Opportunity> opps
+    List<agf__PPM_Project__c> projects
   ) {
     try {
       // Opportunities ready to be invoiced
-      Set<Id> opportunitiesToInvoice = new Map<Id, SObject>(opps).keySet();
+      Set<Id> projectsToBillIds = new Map<Id, SObject>(projects).keySet();
 
       // Create invoices
-      OpportunitiesService.createInvoices(opportunitiesToInvoice, 0);
+      BillingService.generateBillFromSupportProject(projectsToBillIds);
     } catch (Exception e) {
       // Capture context and error for reporting once job complete
       JobError jobError = new JobError();
@@ -40,13 +40,13 @@ global with sharing class BillingSupportProjects_BatchService implements System.
       // Construct email body
       String emailBody = '';
       for (JobError jobError : jobErrors) {
-        List<String> failedOpps = new List<String>();
-        for (Opportunity opp : jobError.records) {
-          failedOpps.add(opp.Name);
+        List<String> failed = new List<String>();
+        for (agf__PPM_Project__c project : jobError.records) {
+          failed.add(project.Name);
         }
         emailBody += String.format(
-          '<p>Error {0} occurred during the processing of Opportunities {1}</p>',
-          new List<String>{ jobError.message, String.join(failedOpps, ',') }
+          '<p>Error {0} occurred during the processing of Project {1}</p>',
+          new List<String>{ jobError.message, String.join(failed, ',') }
         );
       }
       // Send email
