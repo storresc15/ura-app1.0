@@ -63,7 +63,7 @@ public inherited sharing class AccountsSelector extends ApplicationSelector {
   }
 
   //Method for the billing service used in batch
-  public Set<Id> queryLocatorAccountReadyToBill() {
+  public Database.QueryLocator queryLocatorAccountReadyToBill() {
     return Database.getQueryLocator(
       newQueryFactory().setCondition('Active__c = \'\'Yes\'\'').toSOQL()
     );

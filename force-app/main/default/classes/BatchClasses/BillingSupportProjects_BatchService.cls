@@ -4,7 +4,7 @@ global with sharing class BillingSupportProjects_BatchService implements System.
 
   global void execute(SchedulableContext sc) {
     // Start the job once the scheduled time has arrived
-    Database.executeBatch(new Billing_BatchService());
+    Database.executeBatch(new BillingSupportProjects_BatchService());
   }
 
   public Database.QueryLocator start(Database.BatchableContext context) {
@@ -35,8 +35,7 @@ global with sharing class BillingSupportProjects_BatchService implements System.
     // Simple notification of any errors received via email
     if (jobErrors.size() > 0) {
       // Email address from user
-      Map<Id, String> usersEmail = new UsersSelector()
-        .getUsersEmail(new Set<Id>{ UserInfo.getUserId() });
+      String usersEmail = UserInfo.getUserEmail();
       // Construct email body
       String emailBody = '';
       for (JobError jobError : jobErrors) {
@@ -51,10 +50,8 @@ global with sharing class BillingSupportProjects_BatchService implements System.
       }
       // Send email
       Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-      mail.setToAddresses(
-        new List<String>{ usersEmail.get(UserInfo.getUserId()) }
-      );
-      mail.setReplyTo(usersEmail.get(UserInfo.getUserId()));
+      mail.setToAddresses(new List<String>{ usersEmail });
+      mail.setReplyTo(usersEmail);
       mail.setSenderDisplayName(UserInfo.getUserName());
       mail.setSubject('Create Invoice Job Failures');
       mail.setHtmlBody(emailBody);

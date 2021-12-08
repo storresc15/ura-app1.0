@@ -71,6 +71,7 @@ public without sharing class BillingServiceImpl implements IBillingService {
     //Use uow and domain classes to delegate the creation of the Bill record
     fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance();
     Billings bills = new Billings(new List<Bill__c>());
+    Cases cases;
     AccountsSelector selector = (AccountsSelector) Application.Selector.newInstance(
       Account.sObjectType
     );
@@ -81,10 +82,10 @@ public without sharing class BillingServiceImpl implements IBillingService {
     //bills.createBillFromCases(acc, uow, amount);
 
     for (Account acc : selector.selectAccountWithCasesForBilling(accIds)) {
-      cases = new Cases(acc.Cases__r);
-      Double amount = CostSupportFactory.getTicketsCost(acc.Cases__r);
-      bills.createBillFromCases(acc, uow, amount);
-      for (case c : acc.Cases__r) {
+      cases = new Cases(acc.Cases);
+      Double amount = CostSupportFactory.getTicketsCost(acc.Cases);
+      Bill__c bill = bills.createBillFromCases(acc, uow, amount);
+      for (case c : acc.Cases) {
         cases.updateBilling(c, bill, uow);
       }
     }

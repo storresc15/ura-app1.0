@@ -18,11 +18,8 @@ public with sharing class BillingService {
     service().generateBillFromSupportProject(projectIds);
   }
 
-  public static void generateBillFromSupportTickets(
-    Account acc,
-    Set<Id> caseIds
-  ) {
-    service().generateBillFromSupportTickets(acc, caseIds);
+  public static void generateBillFromSupportTickets(Set<Id> accIds) {
+    //service().generateBillFromSupportTickets(accIds);
   }
   public static Double getBalanceForUraApp(Set<Id> accIds) {
     return service().getBalanceForUraApp(accIds);

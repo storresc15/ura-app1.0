@@ -82,7 +82,7 @@ public inherited sharing class ProjectsSelector extends ApplicationSelector {
   }
 
   //Method to be used in batch class for billing
-  public Set<Id> queryLocatorProjectsReadyToBill() {
+  public Database.QueryLocator queryLocatorProjectsReadyToBill() {
     //In future consider updating this to the billing date on project as dependent field to Category
     return Database.getQueryLocator(
       newQueryFactory()
