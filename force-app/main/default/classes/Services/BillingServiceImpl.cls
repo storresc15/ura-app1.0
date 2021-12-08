@@ -67,15 +67,27 @@ public without sharing class BillingServiceImpl implements IBillingService {
     uow.commitWork();
   }
 
-  public void generateBillFromSupportTickets(Account acc, Set<Id> caseIds) {
+  public void generateBillFromSupportTickets(Set<Id> accIds) {
     //Use uow and domain classes to delegate the creation of the Bill record
     fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance();
     Billings bills = new Billings(new List<Bill__c>());
+    AccountsSelector selector = (AccountsSelector) Application.Selector.newInstance(
+      Account.sObjectType
+    );
 
-    Double Amount = CostSupportFactory.getTicketsCost(caseIds);
+    //Double Amount = CostSupportFactory.getTicketsCost(caseIds);
     //Get additional information for the bill from AccountIds?? Or add a parameter to probably search for accounts rather than only case Ids.
     //Consider replacing the below method with the correct bill from cases implementation
-    bills.createBillFromCases(acc, uow, amount);
+    //bills.createBillFromCases(acc, uow, amount);
+
+    for (Account acc : selector.selectAccountWithCasesForBilling(accIds)) {
+      cases = new Cases(acc.Cases__r);
+      Double amount = CostSupportFactory.getTicketsCost(acc.Cases__r);
+      bills.createBillFromCases(acc, uow, amount);
+      for (case c : acc.Cases__r) {
+        cases.updateBilling(c, bill, uow);
+      }
+    }
 
     //commit the uow
     uow.commitWork();

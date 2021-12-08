@@ -61,4 +61,24 @@ public inherited sharing class AccountsSelector extends ApplicationSelector {
   public List<Account> selectById(Set<ID> idSet) {
     return (List<Account>) selectSObjectsById(idSet);
   }
+
+  //Method for the billing service used in batch
+  public Set<Id> queryLocatorAccountReadyToBill() {
+    return Database.getQueryLocator(
+      newQueryFactory().setCondition('Active__c = \'\'Yes\'\'').toSOQL()
+    );
+  }
+
+  public List<Account> selectAccountWithCasesForBilling(Set<Id> accIds) {
+    fflib_QueryFactory query = newQueryFactory();
+    query.setCondition('Id IN :accIds');
+
+    fflib_QueryFactory rsQF = query.subSelectQuery('Cases')
+      .selectFields(new Set<String>{ 'Id', 'Project__c', 'AccountId' })
+      .setCondition(
+        'AccountId in :accIds AND Project__c = NULL AND Bill__c = NULL'
+      );
+
+    return (List<Account>) Database.query(query.toSOQL());
+  }
 }

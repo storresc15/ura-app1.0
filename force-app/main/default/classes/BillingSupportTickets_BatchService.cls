@@ -9,23 +9,20 @@ global with sharing class BillingSupportTickets_BatchService implements System.S
 
   public Database.QueryLocator start(Database.BatchableContext context) {
     // Obtain appropriate query locator from the selector
-    return new OpportunitiesSelector().queryLocatorReadyToInvoice();
+    return new AccountsSelector().queryLocatorAccountReadyToBill();
   }
 
-  public void execute(
-    Database.BatchableContext context,
-    List<Opportunity> opps
-  ) {
+  public void execute(Database.BatchableContext context, List<Account> accs) {
     try {
       // Opportunities ready to be invoiced
-      Set<Id> opportunitiesToInvoice = new Map<Id, SObject>(opps).keySet();
+      Set<Id> accsToBill = new Map<Id, SObject>(accs).keySet();
 
       // Create invoices
-      OpportunitiesService.createInvoices(opportunitiesToInvoice, 0);
+      BillingService.generateBillFromSupportTickets(accsToBill);
     } catch (Exception e) {
       // Capture context and error for reporting once job complete
       JobError jobError = new JobError();
-      jobError.records = opps;
+      jobError.records = accs;
       jobError.message = e.getMessage();
       jobErrors.add(jobError);
     }
@@ -41,8 +38,8 @@ global with sharing class BillingSupportTickets_BatchService implements System.S
       String emailBody = '';
       for (JobError jobError : jobErrors) {
         List<String> failedOpps = new List<String>();
-        for (Opportunity opp : jobError.records) {
-          failedOpps.add(opp.Name);
+        for (Account acc : jobError.records) {
+          failedOpps.add(acc.Name);
         }
         emailBody += String.format(
           '<p>Error {0} occurred during the processing of Opportunities {1}</p>',
@@ -67,6 +64,6 @@ global with sharing class BillingSupportTickets_BatchService implements System.S
    **/
   public class JobError {
     public String message;
-    public List<Opportunity> records;
+    public List<Account> records;
   }
 }
