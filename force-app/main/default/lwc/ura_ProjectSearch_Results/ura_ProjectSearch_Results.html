@@ -23,25 +23,15 @@
                   onstoryselect={updateSelectedTile}
                   selected-story-id={selectedBoatId}
                 ></c-ura_-story-tile>
-                <!--<p>{story.StoryTitle}</p>
-                    <p>{story.StoryNumber}</p>
-                    <p>{story.StoryStatus}</p>
-                    <p>{story.StoryEpic}</p> -->
               </lightning-layout-item>
             </template>
           </lightning-layout>
         </div>
       </template>
     </lightning-tab>
-    <!-- <lightning-tab label="Boat Editor">
-           Scrollable div and lightning datatable go here 
-          <div class="slds-scrollable_y">
-            <lightning-datatable key-field="Id" data={boats} onsave={handleSave} columns={columns} draft-values={draftValues} hide-checkbox-column></lightning-datatable>
-          </div>
+    <!-- <lightning-tab label="">
+           
         </lightning-tab> -->
-    <lightning-tab label="Additional">
-      <!-- boatsNearMe component goes here 
-            <c-boats-near-me boat-type-id={boatTypeId}></c-boats-near-me> -->
-    </lightning-tab>
+    <lightning-tab label="Additional"> </lightning-tab>
   </lightning-tabset>
 </template>
