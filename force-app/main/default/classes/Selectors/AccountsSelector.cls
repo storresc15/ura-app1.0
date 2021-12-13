@@ -4,9 +4,9 @@ Description     : Main Selector for Account object, handles all queries for the 
 Created By      : Sebastian Torres
 Created Date    : 2021-08-05
 Modification Log:
----------------------------------------------------------------------------------- 
+------------------------------------------------------------------------------- 
 Developer                   Date                   Description
-----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 Sebastian                 2021-08-05              Initial version
 Sebastian                 2021-11-13              Added the select by id with contacts
 *******************************************************************************/

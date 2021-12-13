@@ -1,14 +1,14 @@
-/*********************************************************************************
+/*******************************************************************************
 Class Name      : CasesSelector
 Description     : Main Selector for Case object, handles all queries for the specific sObject - Use of fflib selector layer
 Created By      : Sebastian Torres
 Created Date    : 2021-08-05
 Modification Log:
----------------------------------------------------------------------------------- 
+------------------------------------------------------------------------------- 
 Developer                   Date                   Description
-----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 Sebastian                 2021-08-05              Initial version
-*********************************************************************************/
+*******************************************************************************/
 public inherited sharing class CasesSelector extends ApplicationSelector {
   public CasesSelector() {
     super();

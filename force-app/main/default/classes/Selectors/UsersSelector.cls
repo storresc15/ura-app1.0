@@ -1,14 +1,14 @@
-/*********************************************************************************
+/*******************************************************************************
 Class Name      : UsersSelector
 Description     : Main Selector for User object, handles all queries for the specific sObject - Use of fflib selector layer
 Created By      : Sebastian Torres
 Created Date    : 2021-08-05 
 Modification Log:
----------------------------------------------------------------------------------- 
+------------------------------------------------------------------------------- 
 Developer                   Date                   Description
-----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 Sebastian                 2021-08-05              Initial version
-*********************************************************************************/
+*******************************************************************************/
 public inherited sharing class UsersSelector extends ApplicationSelector {
   public UsersSelector() {
     super();
@@ -72,17 +72,16 @@ public inherited sharing class UsersSelector extends ApplicationSelector {
     return resultMap;
   }
 
-  //Method to call for users with permission sets, to be updated to use selector subquery in the future
+  //Method to call for users with permission sets
   public List<User> selectyByContactIdWithPermissionSets(Set<Id> conIds) {
-    List<User> users = [
-      SELECT
-        ID,
-        USERNAME,
-        ContactId,
-        (SELECT ID, PermissionSetId FROM PermissionSetAssignments)
-      FROM USER
-      WHERE ContactId IN :conIds
-    ];
-    return users;
+    Set<String> permissionSetFields = new Set<String>{
+      'Id',
+      'PermissionSetId'
+    };
+    fflib_QueryFactory query = newQueryFactory();
+    query.setCondition('ContactId IN :conIds');
+    fflib_QueryFactory rsQF = query.subSelectQuery('PermissionSetAssignments')
+      .selectFields(permissionSetFields);
+    return (List<User>) Database.query(query.toSOQL());
   }
 }

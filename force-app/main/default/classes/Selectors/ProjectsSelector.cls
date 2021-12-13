@@ -4,9 +4,9 @@ Description     : Main Selector for Projects object, handles all queries for the
 Created By      : Sebastian Torres
 Created Date    : 2021-08-05  
 Modification Log:
----------------------------------------------------------------------------------- 
+------------------------------------------------------------------------------- 
 Developer                   Date                   Description
-----------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 Sebastian                 2021-08-05              Initial version
 *******************************************************************************/
 public inherited sharing class ProjectsSelector extends ApplicationSelector {

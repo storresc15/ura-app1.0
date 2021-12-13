@@ -4,9 +4,9 @@ Description     : Main Selector for Opp object, handles all queries for the spec
 Created By      : Sebastian Torres
 Created Date    : 2021-08-05  
 Modification Log:
----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 Developer                   Date                   Description
----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 Sebastian                 2021-08-05              Initial version
 *******************************************************************************/
 public inherited sharing class OpportunitiesSelector extends ApplicationSelector {

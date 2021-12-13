@@ -1,14 +1,14 @@
-/*********************************************************************************
+/*******************************************************************************
 Class Name      : ContactsSelector
 Description     : Main Selector for Contact object, handles all queries for the specific sObject - Use of fflib selector layer
 Created By      : Sebastian Torres
 Created Date    : 2021-08-05 
 Modification Log:
----------------------------------------------------------------------------------- 
+------------------------------------------------------------------------------- 
 Developer                   Date                   Description
-----------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 Sebastian                 2021-08-05              Initial version
-*********************************************************************************/
+*******************************************************************************/
 public inherited sharing class ContactsSelector extends ApplicationSelector {
   public ContactsSelector() {
     super();

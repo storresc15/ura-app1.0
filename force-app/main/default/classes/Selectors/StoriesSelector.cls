@@ -4,9 +4,9 @@ Description     : Main Selector for Stirues object, handles all queries for the 
 Created By      : Sebastian Torres
 Created Date    : 2021-11-08  
 Modification Log:
----------------------------------------------------------------------------------- 
+------------------------------------------------------------------------------- 
 Developer                   Date                   Description
-----------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 Sebastian                 2021-11-08              Initial version
 *******************************************************************************/
 public inherited sharing class StoriesSelector extends ApplicationSelector {
