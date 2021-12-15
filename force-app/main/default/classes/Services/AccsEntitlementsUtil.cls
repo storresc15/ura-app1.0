@@ -1,15 +1,15 @@
-/*********************************************************************************
+/*******************************************************************************
 Class Name      : AccsEntitlementsUtil
 Description     : Util Class to provide the entitlement of the current accounts in the process - Uses Singleton Pattern
 Created By      : Sebastian Torres
 Created Date    : 2020-11-17
 Modification Log:
----------------------------------------------------------------------------------- 
+------------------------------------------------------------------------------- 
 Developer                   Date                   Description
-----------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 Sebastian                 2020-11-17                Initial version
 Sebastian          2020-11-28        Added the static method to get instance as well as making the constructor private to follow the correct singleton pattern
-*********************************************************************************/
+*******************************************************************************/
 public class AccsEntitlementsUtil {
   private List<Entitlement> entitlementList;
   private Map<String, Entitlement> mpAllEntitlements;

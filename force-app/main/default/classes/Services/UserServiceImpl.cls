@@ -1,15 +1,15 @@
-/********************************************************************************
+/*******************************************************************************
 Class Name      : UserServiceImpl
 Description     : Main Class for user service implementation
 Created By      : Sebastian Torres
 Created Date    : 2021-09-10
 Modification Log:
----------------------------------------------------------------------------------- 
+------------------------------------------------------------------------------- 
 Developer                   Date                   Description
-----------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 Sebastian                 2021-09-10              Initial version
 Sebastian                 2021-10-01              Updated with the inactivate method and added the Domain class
-********************************************************************************/
+******************************************************************************/
 public inherited sharing class UserServiceImpl implements IUserService {
   public void activateUserFromContact(Set<Id> conIds) {
     //To be implemented

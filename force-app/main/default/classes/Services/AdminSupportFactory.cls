@@ -4,9 +4,9 @@ Description     : Factory to return the details of the selected SLA from Account
 Created By      : Sebastian Torres
 Created Date    : 2021-09-24
 Modification Log:
----------------------------------------------------------------------------------- 
+------------------------------------------------------------------------------- 
 Developer                   Date                   Description
-----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 Sebastian                 2021-09-24              Initial version
 *******************************************************************************/
 public without sharing class AdminSupportFactory {

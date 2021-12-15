@@ -1,6 +1,6 @@
 /*******************************************************************************
-Class Name      : DecoratorSupport
-Description     : Decorator support class used as a single decorator class to be used as main decorator based on custom metadata to add the price of the tickets this class uses a new approach of dynamic decorator that uses the different metadata types
+Class Name      : CostSupportFactory
+Description     : CostSupportFactory class used as a utility class for calculating the cost of all the cases leveraging the base and decorator support and dynamic decorator via custom metadata
 Created By      : Sebastian Torres
 Created Date    : 2021-09-17
 Modification Log:

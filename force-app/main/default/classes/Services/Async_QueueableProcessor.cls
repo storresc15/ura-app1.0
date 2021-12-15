@@ -1,15 +1,15 @@
-/*********************************************************************************
+/*******************************************************************************
 Class Name      : Credomatic_Async_QueueableProcessor
 Description     : Main queuable service class, provides queuable support based on the async request object
         Can provide also callout support for integrations
 Created By      : Sebastian Torres
 Created Date    : 2021-04-14 
 Modification Log: 
----------------------------------------------------------------------------------- 
+------------------------------------------------------------------------------- 
 Developer                   Date                   Description
-----------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 Sebastian                 2021-04-14              Initial version
-*********************************************************************************/
+*******************************************************************************/
 public without sharing class Async_QueueableProcessor implements queueable, Database.AllowsCallouts {
   @testvisible
   private static Boolean fakeException = false; // This static variable is added to test exception handling

@@ -1,14 +1,14 @@
-/*********************************************************************************
+/*******************************************************************************
 Class Name      : ProjectCreateFactory
 Description     : Factory class to create projects based on Opportunities input
 Created By      : Sebastian Torres
 Created Date    : 2021-10-15  
 Modification Log:
----------------------------------------------------------------------------------- 
+------------------------------------------------------------------------------- 
 Developer                   Date                   Description
-----------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 Sebastian                 2021-10-15              Initial version
-*********************************************************************************/
+*******************************************************************************/
 public without sharing class ProjectCreateFactory {
   public static agf__PPM_Project__c createProject(Opportunity opp) {
     agf__PPM_Project__c project = new agf__PPM_Project__c();

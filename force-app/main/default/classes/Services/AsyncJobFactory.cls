@@ -13,13 +13,21 @@ public without sharing class AsyncJobFactory {
   public static AsyncJob getInstance(String jobName) {
     AsyncJob job = null;
 
-    if (jobName == 'HandleUserPermission')
-      job = new AsyncHandleProjectAccess();
-    if (jobName == 'HandleUserActivation')
-      job = new AsyncHandleUserCreation();
-    if (jobName == 'HandleUserDeactivation')
-      job = new AsyncHandleUserDeactivation();
-    //implement rest of async processes
+    switch on jobName {
+      when 'HandleUserPermission' {
+        job = new AsyncHandleProjectAccess();
+      }
+      when 'HandleUserActivation' {
+        job = new AsyncHandleUserCreation();
+      }
+      when 'HandleUserDeactivation' {
+        job = new AsyncHandleUserDeactivation();
+      }
+      //implement rest of async processes
+      when else {
+        job = null;
+      }
+    }
 
     return job;
   }
