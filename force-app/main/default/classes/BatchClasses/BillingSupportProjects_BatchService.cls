@@ -12,6 +12,7 @@ global with sharing class BillingSupportProjects_BatchService implements System.
     return new ProjectsSelector().queryLocatorProjectsReadyToBill();
   }
 
+  //Execute method
   public void execute(
     Database.BatchableContext context,
     List<agf__PPM_Project__c> projects

@@ -2,6 +2,7 @@ global with sharing class BillingSupportTickets_BatchService implements System.S
   // Simple job log for errors
   private List<JobError> jobErrors = new List<JobError>();
 
+  //Excecute - Main Excecute method
   global void execute(SchedulableContext sc) {
     // Start the job once the scheduled time has arrived
     Database.executeBatch(new BillingSupportTickets_BatchService());
