@@ -43,20 +43,7 @@ public without sharing class SupportServiceImpl implements ISupportService {
       ORDER BY e.CreatedDate DESC
     ];
     if (entls.isEmpty() == false) {
-      for (Case c : cases) {
-        if (
-          c.EntitlementId == null &&
-          c.AccountId != null &&
-          c.Type != 'Routine Maintenance'
-        ) {
-          for (Entitlement e : entls) {
-            if (e.AccountId == c.AccountId) {
-              caseDomain.assignEntitlement(c, e.id, uow);
-              break;
-            }
-          }
-        }
-      }
+      assignEntitlement(cases, entls, caseDomain, uow);
     }
   }
 
@@ -169,5 +156,27 @@ public without sharing class SupportServiceImpl implements ISupportService {
     }
     //Commit the work
     uow.commitWork();
+  }
+
+  private void assignEntitlement(
+    List<Case> cases,
+    List<Entitlement> entls,
+    Cases caseDomain,
+    fflib_ISObjectUnitOfWork uow
+  ) {
+    for (Case c : cases) {
+      if (
+        c.EntitlementId == null &&
+        c.AccountId != null &&
+        c.Type != 'Routine Maintenance'
+      ) {
+        for (Entitlement e : entls) {
+          if (e.AccountId == c.AccountId) {
+            caseDomain.assignEntitlement(c, e.id, uow);
+            break;
+          }
+        }
+      }
+    }
   }
 }
