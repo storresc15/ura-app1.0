@@ -31,11 +31,10 @@ public class AccsEntitlementsUtil {
   //can instantiate this class
   //To be refactored in the future with the implementation of the selector class for entitlements
   private AccsEntitlementsUtil(Set<Id> ids) {
-    entitlementList = [
-      SELECT ID, NAME, AccountID
-      FROM ENTITLEMENT
-      WHERE AccountId IN :ids
-    ];
+    EntitlementsSelector entSelector = (EntitlementsSelector) Application.Selector.newInstance(
+      Entitlement.SObjectType
+    );
+    entitlementList = entSelector.selectFromAccountIds(ids);
     mpAllEntitlements = new Map<String, Entitlement>();
     for (Entitlement e : entitlementList) {
       mpAllEntitlements.put(e.AccountId, e);

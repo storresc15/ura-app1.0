@@ -14,4 +14,5 @@ public interface ISupportService {
   void setCaseAssignmentRule(Set<Id> caseIds);
   void setEntitlementsAssigments(Set<Id> caseIds);
   void setEntitlementSupportOnAccount(Set<Id> accIds);
+  void calculateEntitlementCases(Set<Id> accIds);
 }

@@ -1,14 +1,14 @@
-/*******************************************************************************
+/*********************************************************************************
 Class Name      : ApplicationDomain
 Description     : Application Domain, to make easier to configure the fflib_SObjectDomain class as well as provide a means to estalish shared or common domain logic code.
 Created By      : Sebastian Torres
 Created Date    : 2021-09-03 
 Modification Log:
-------------------------------------------------------------------------------- 
+---------------------------------------------------------------------------------- 
 Developer                   Date                   Description
---------------------------------------------------------------------------------
+----------------------------------------------------------------------------------
 Sebastian                 2021-09-03              Initial version
-*******************************************************************************/
+*********************************************************************************/
 /**
  * Applicaiton specific Domain base class, customise fflib_SObjectDomain and add common behaviour
  **/

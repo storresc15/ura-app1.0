@@ -49,7 +49,8 @@ public class Application {
       agf__PPM_Project__c.SObjectType => ProjectsSelector.class,
       User.SObjectType => UsersSelector.class,
       Bill__c.SObjectType => BillingsSelector.class,
-      agf__ADM_Work__c.SObjectType => StoriesSelector.class
+      agf__ADM_Work__c.SObjectType => StoriesSelector.class,
+      Entitlement.SObjectType => EntitlementsSelector.class
     }
   );
 

@@ -26,6 +26,10 @@ public with sharing class SupportService {
     service().setEntitlementSupportOnAccount(accIds);
   }
 
+  public static void calculateEntitlementCases(Set<Id> accIds) {
+    service().calculateEntitlementCases(accIds);
+  }
+
   private static ISupportService service() {
     return (ISupportService) Application.Service.newInstance(
       ISupportService.class

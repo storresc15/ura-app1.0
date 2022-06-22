@@ -41,7 +41,19 @@ public inherited sharing class AccountsSelector extends ApplicationSelector {
     query.setCondition('Id IN :accIds');
 
     fflib_QueryFactory rsQF = query.subSelectQuery('Cases')
-      .selectFields(new Set<String>{ 'Id', 'entitlementid' })
+      .selectFields(new Set<String>{ 'Id', 'entitlementid', 'Status' })
+      .setCondition('AccountId in :accIds');
+
+    fflib_QueryFactory rsQFEnt = query.subSelectQuery('Entitlements')
+      .selectFields(
+        new Set<String>{
+          'Id',
+          'Name',
+          'accountId',
+          'RemainingCases',
+          'CasesPerEntitlement'
+        }
+      )
       .setCondition('AccountId in :accIds');
 
     return (List<Account>) Database.query(query.toSOQL());
@@ -64,8 +76,9 @@ public inherited sharing class AccountsSelector extends ApplicationSelector {
 
   //Method for the billing service used in batch
   public Database.QueryLocator queryLocatorAccountReadyToBill() {
+    String active = 'Active__c = \'Yes\'';
     return Database.getQueryLocator(
-      newQueryFactory().setCondition('Active__c = \'\'Yes\'\'').toSOQL()
+      newQueryFactory().setCondition(active).toSOQL()
     );
   }
 

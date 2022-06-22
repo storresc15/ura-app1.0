@@ -33,6 +33,12 @@ public inherited sharing class Cases extends ApplicationDomain {
         existingRecords
       )
     );
+    SupportService.calculateEntitlementCases(
+      getQualifyingRecordsToCalculateRemainingCases(
+        (List<Case>) Records,
+        existingRecords
+      )
+    );
   }
 
   public Set<Id> getQualifyingRecordsToUpdateEntitlement(
@@ -54,11 +60,28 @@ public inherited sharing class Cases extends ApplicationDomain {
     return selectedCases;
   }
 
+  public set<Id> getQualifyingRecordsToCalculateRemainingCases(
+    List<Case> Records,
+    Map<Id, sObject> existingRecords
+  ) {
+    Set<Id> accIds = new Set<Id>();
+    Map<Id, Case> casesOldMap = new Map<ID, Case>(
+      (List<Case>) existingRecords.values()
+    );
+    for (Case c : Records) {
+      if (c.Status != casesOldMap.get(c.id).Status) {
+        accIds.add(c.AccountId);
+      }
+    }
+    return accIds;
+  }
+
   public void assignEntitlement(
     Case c,
     Id entitlementId,
     fflib_ISObjectUnitOfWork uow
   ) {
+    system.debug('Called the assign Entitlement from Case Domain');
     c.EntitlementId = entitlementId;
     uow.registerDirty(c);
   }

@@ -23,7 +23,12 @@ public without sharing class SupportServiceImpl implements ISupportService {
     Set<Id> caseIds,
     fflib_ISObjectUnitOfWork uow
   ) {
-    CasesSelector selector = new CasesSelector();
+    CasesSelector selector = (CasesSelector) Application.Selector.newInstance(
+      Case.SObjectType
+    );
+    EntitlementsSelector entSelector = (EntitlementsSelector) Application.Selector.newInstance(
+      Entitlement.SObjectType
+    );
     List<Case> cases = selector.selectById(caseIds);
     Set<Id> contactIds = new Set<Id>();
     Set<Id> acctIds = new Set<Id>();
@@ -33,16 +38,10 @@ public without sharing class SupportServiceImpl implements ISupportService {
       acctIds.add(c.AccountId);
     }
     //At some point we should change this to use a selector class in order to retrieve the entitlements instead of calling the SOQL this way
-    List<Entitlement> entls = [
-      SELECT e.StartDate, e.Id, e.EndDate, e.AccountId, e.AssetId, e.CreatedDate
-      FROM Entitlement e
-      WHERE
-        e.AccountId IN :acctIds
-        AND e.EndDate >= Today
-        AND e.StartDate <= Today
-      ORDER BY e.CreatedDate DESC
-    ];
-    if (entls.isEmpty() == false) {
+    List<Entitlement> entls = entSelector.selectFromAccountIds(acctIds);
+    system.debug('Inside the Impl class, the cases: ' + cases);
+    system.debug('Inside the Impl class, the entitlements: ' + entls);
+    if (entls == null || entls.isEmpty() == false) {
       assignEntitlement(cases, entls, caseDomain, uow);
     }
   }
@@ -64,7 +63,9 @@ public without sharing class SupportServiceImpl implements ISupportService {
     fflib_ISObjectUnitOfWork uow,
     MyDML dmlOptions
   ) {
-    CasesSelector selector = new CasesSelector();
+    CasesSelector selector = (CasesSelector) Application.Selector.newInstance(
+      Case.SObjectType
+    );
     List<Case> cases = selector.selectById(caseIds);
 
     for (Case c : cases) {
@@ -115,7 +116,9 @@ public without sharing class SupportServiceImpl implements ISupportService {
       LIMIT 1
     ];
     //Retrieve the account from selector
-    AccountsSelector selector = new AccountsSelector();
+    AccountsSelector selector = (AccountsSelector) Application.Selector.newInstance(
+      Account.SObjectType
+    );
     List<Account> accs = selector.selectAccountWithCasesAndEntitlements(accIds);
 
     //Check if the Account already has an active entitlment
@@ -158,6 +161,47 @@ public without sharing class SupportServiceImpl implements ISupportService {
     uow.commitWork();
   }
 
+  //Method to calculate the remaining cases in Entitlment
+  //TO BE REVIEWED IN FUTURE
+  public void calculateEntitlementCases(Set<Id> accIds) {
+    AccountsSelector selector = (AccountsSelector) Application.Selector.newInstance(
+      Account.SObjectType
+    );
+    List<Account> accs = selector.selectAccountWithCasesAndEntitlements(accIds);
+    fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance();
+    system.debug('Inside the calculate entitlement with Accounts: ' + accs);
+    for (Account a : accs) {
+      system.debug(
+        'Starting with Account: ' +
+        a.Name +
+        'With these entitlements: ' +
+        a.Entitlements
+      );
+      for (Entitlement e : a.Entitlements) {
+        system.debug(
+          'Inside the calculate entitlement For entitlement: ' + e.Name
+        );
+        integer count = 0;
+        for (Case c : a.Cases) {
+          if (c.Status == 'Closed' && c.EntitlementId == e.Id) {
+            count++;
+          }
+        }
+
+        e.RemainingCases = e.CasesPerEntitlement - count;
+        system.debug(
+          'Inside the calculate entitlement Updating entitlement ' +
+          e.Name +
+          'with: ' +
+          e.RemainingCases
+        );
+        uow.registerDirty(e);
+      }
+    }
+    uow.commitWork();
+  }
+
+  @TestVisible
   private void assignEntitlement(
     List<Case> cases,
     List<Entitlement> entls,
@@ -165,10 +209,14 @@ public without sharing class SupportServiceImpl implements ISupportService {
     fflib_ISObjectUnitOfWork uow
   ) {
     for (Case c : cases) {
+      system.debug(
+        'Inside the assignEntitlement Method in service for following case: ' +
+        c
+      );
       if (
         c.EntitlementId == null &&
-        c.AccountId != null &&
-        c.Type != 'Routine Maintenance'
+        c.AccountId != null /*&&
+         c.Type != 'Routine Maintenance' Why we need this??*/
       ) {
         for (Entitlement e : entls) {
           if (e.AccountId == c.AccountId) {
